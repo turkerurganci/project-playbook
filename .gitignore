@@ -1,0 +1,15 @@
+# Arkeoloji çalışma dosyaları — kaynak projeye ait referanslar içerir,
+# public template'e ASLA girmez (DECISIONS §3 karar 12 + 13).
+_archaeology/
+
+# Editör / OS
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# AI oturum artifact'ları
+.claude/settings.local.json
+.claude/hooks/*.log
