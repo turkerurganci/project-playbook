@@ -13,6 +13,8 @@ Bu template kendi sürümünü taşır. Yeni projelerdeki öğrenimler buraya ge
 
 İlk sürüm. Gerçek bir projede fikirden MVP'ye kadar fiilen uygulanan yöntemin konsolide edilmiş hâli.
 
+Lisans: MIT.
+
 **İçerik:**
 - **L1** Konsolide metodoloji: doküman üretimi (10 aşama) + implementation + **MVP borç kapatma aşaması** + **ertelenmiş işler disiplini** + kapanış ritüeli + numaralandırma konvansiyonları + **öğrenim terfisi**
 - **L2** 12 doküman iskeleti + 8 süreç dosyası + rapor şablonları

@@ -102,3 +102,7 @@ scripts/git-hooks/           commit-msg + pre-push (3 katman) + kurulum
 ## Katkı ve sürümleme
 
 Template kendi sürümünü taşır ([`CHANGELOG.md`](CHANGELOG.md)). Yeni projelerde ortaya çıkan öğrenimler buraya geri akar: bir projede kurala terfi eden bir ders, playbook'un bir sonraki sürümünde gün 0'da bulunur.
+
+## Lisans
+
+[MIT](LICENSE). "Use this template" ile doğan projeler serbestçe kullanır, değiştirir ve dağıtır.
