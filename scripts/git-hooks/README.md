@@ -9,8 +9,11 @@ Bu hook'lar **iyi niyete bağlı olmayan** savunma katmanıdır. Disiplin kurall
 
 | Hook | Ne yapar |
 |---|---|
+| `pre-commit` | **Sır guard'ı.** Staged içerikte sır dosyası yolu, private key bloğu veya bilinen sır anahtarına gerçek değer ataması varsa **commit'i** bloklar |
 | `commit-msg` | `task/TXX-*` dalında yapılan her commit'in subject'i kendi TXX'inden farklı bir TXX referansı içeriyorsa **commit'i** bloklar (bundled-PR'ın birincil savunması) |
 | `pre-push` | Üç katman: **(1)** korunan dallara direct push · **(2)** push edilen dalın son CI run'ı başarısızsa · **(3)** dalda yabancı TXX commit'i varsa — push'u bloklar |
+
+> **Sır guard'ı bilinçli olarak jeneriktir.** Domain'e veya sağlayıcıya özgü kalıp içermez — o kalıplar `hooks.config`'e yazılır, hook gövdesine değil. Aşırı hevesli bir tarayıcı yanlış pozitif üretir, yanlış pozitif bypass alışkanlığı doğurur ve guard fiilen ölür.
 
 ---
 
@@ -38,6 +41,10 @@ git config core.hooksPath   # beklenen: scripts/git-hooks
 ```bash
 PB_PROTECTED_BRANCHES="main develop"   # varsayılan: main
 PB_TASK_BRANCH_PREFIX="task/"          # varsayılan: task/
+
+# Sır guard'ı — projeye özgü ek desenler (varsayılanlara EKLENİR, değiştirmez)
+PB_SECRET_PATHS='(^|/)certs/|\.jks$'   # ek sır dosyası yolları (regex)
+PB_SECRET_KEYS='(WEBHOOK_SECRET|DSN)'  # ek sır anahtar adları (regex)
 ```
 
 ---
@@ -46,6 +53,12 @@ PB_TASK_BRANCH_PREFIX="task/"          # varsayılan: task/
 
 | Senaryo | Beklenen |
 |---|---|
+| `.env` dosyasını stage'leyip commit | ✗ BLOCKED (pre-commit, yol) |
+| `.env.example` stage'leyip commit | ✓ PASS (şablon izlenir) |
+| İçinde `BEGIN RSA PRIVATE KEY` olan dosya | ✗ BLOCKED (pre-commit, içerik) |
+| `API_KEY=<YOUR_KEY_HERE>` satırı | ✓ PASS (placeholder) |
+| `API_KEY=sk_live_9f3a...` satırı | ✗ BLOCKED (pre-commit, içerik) |
+| `PB_ALLOW_SECRET=1 git commit` | ⚠ WARN + PASS, BYPASS_LOG `[secret]` kaydı |
 | `git push origin main` | ✗ BLOCKED (Layer 1) |
 | `PB_ALLOW_DIRECT_PUSH=1 git push origin main` | ⚠ WARN + PASS, BYPASS_LOG kaydı |
 | `git push origin task/T21-x` (CI yok / son CI success, temiz commit'ler) | ✓ PASS |
@@ -69,7 +82,12 @@ PB_ALLOW_DIRECT_PUSH=1 PB_BYPASS_REASON="aciklama" git push origin main
 # Layer 3 + commit-msg (bundled-PR / yabancı TXX):
 PB_ALLOW_BUNDLED=1 PB_BYPASS_REASON="aciklama" git commit -m "T17: quick fix"
 PB_ALLOW_BUNDLED=1 PB_BYPASS_REASON="aciklama" git push origin task/T21-x
+
+# pre-commit (sır guard'ı):
+PB_ALLOW_SECRET=1 PB_BYPASS_REASON="aciklama" git commit -m "..."
 ```
+
+> **Sır bypass'ı özel bir durumdur.** Diğer bypass'lar disiplin borcudur; bu, gerçek bir sır commit'lendiyse **geri alınamaz** bir olaydır. Yanlış pozitifse desenini daralt; gerçek sırsa **değeri döndür** — geçmişi temizlemek yeterli değildir.
 
 **Kullanmadan iki kez düşün.** Her bypass `Docs/BYPASS_LOG.md`'ye otomatik satır ekler (tarih, kullanıcı, dal, commit, sebep, `[kind]` etiketi). Bypass commit'inden sonraki **ilk normal commit'te** log dosyasındaki değişikliği commit'le.
 

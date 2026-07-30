@@ -15,7 +15,7 @@ scripts/git-hooks/commit-msg text eol=lf
 *.yaml                      text eol=lf
 *.env                       text eol=lf
 
-# Binaries (add project-specific ones during SETUP).
+# Binaries — add project-specific types in SETUP §2.
 *.png  binary
 *.jpg  binary
 *.gif  binary

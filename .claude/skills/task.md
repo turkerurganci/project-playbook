@@ -30,6 +30,17 @@ git status --short
 
 **Kanıt:** Sonuç rapora yazılır — "Working tree: temiz" veya "Working tree: 3 dosya → chore PR #NN".
 
+**Aynı adımda — hook kurulum kontrolü (HARD STOP):**
+
+```bash
+git config core.hooksPath
+```
+
+- Çıktı `scripts/git-hooks` ise → devam.
+- **Boş veya farklı** ise → **HARD STOP.** `bash scripts/git-hooks/install.sh` çalıştır, tekrar doğrula, sonra devam et.
+
+**Neden her oturumda:** Hook'lar kurulu değilse pre-commit + commit-msg + pre-push'un üç katmanı **sessizce yoktur** — ve bu gözlemlenebilir değildir. Yeni bir klon, bulut oturumu, geçici konteyner veya `git config --unset` sonrası koruma sıfırdır ama hiçbir şey uyarı vermez. Bu, playbook'un doğuş dersinin (kırık CI'nin 5 task boyunca sessizce sürmesi) birebir aynı şeklidir. Kurulum tek seferlik bir SETUP adımı **değildir**, oturum kapısıdır.
+
 ### Adım 0 — Ana dal CI startup check (HARD STOP)
 
 **Neden:** Bir referans projede ana dalın CI'ı 5 task üst üste kırık kaldı; 7'den fazla merge kırmızı CI üzerine indi ve "CI PASS zorunlu" disiplini fiilen düştü.
@@ -61,7 +72,13 @@ gh run list --branch main --limit 3 --json databaseId,conclusion,status,displayT
 
    Kod yazmadan ve scope'u kesinleştirmeden önce, task'ın dayandığı dış varsayımları listele ve **her birini somut kanıtla doğrula**.
 
-   Tipik kategoriler:
+   **4a. Tetikleyici tarama (varsayımı fark etme adımı).** Kabul kriterlerini ve plan metnini şu terimler için tara — biri geçiyorsa orada bir dış varsayım vardır:
+
+   > plan tier · ücretsiz / paid / trial / subscription / Pro / Team / Enterprise · kota · rate limit · API key · onay süreci · dal koruması · zorunlu review · runner / dakika / depolama limiti · paket sürümü · registry · sandbox / test ortamı · bölge kısıtı · SLA
+
+   Kuralın doğduğu vakada sorun kanıt üretememek değil, **varsayımın var olduğunun fark edilmemesiydi**.
+
+   **4b. Doğrula.** Tipik kategoriler:
    - **Plan tier / feature availability** — ücretli mi, hangi plan gerekli
    - **Paket sürüm uyumu** — planda/dokümanda geçen sürüm registry'de gerçekten var mı
    - **Platform/OS farkı** — path, tip eşlemesi, base image, geliştirme ≠ CI ortamı
@@ -73,6 +90,8 @@ gh run list --branch main --limit 3 --json databaseId,conclusion,status,displayT
    - Hepsi doğrulandı → Adım 5.
    - Biri kırık → **DUR.** Bu scope'u etkileyen bir karardır. Proje sahibine sun: *"Task X, Y varsayımına dayanıyor; Y kırık; seçenekler A/B/C."* Gerekirse BLOCKED (`EXTERNAL_BLOCKER` / `PLAN_CORRECTION_REQUIRED`).
    - *"Bu task'ta dış varsayım yok"* geçerli bir sonuçtur — ama rapora **açıkça** yaz. Audit trail'in eksikliği ≠ varsayımın yokluğu.
+
+   **4c. Zaman kutusu.** Bir varsayımın doğrulanması **~5 dakikalık** bir iştir. Daha uzun sürecekse (derin doküman okuma, ücretli kayıt, onay bekleyen erişim) **dur ve sor:** *"Bu varsayımı doğrulamam ~X dakika alacak, devam edeyim mi?"* Kaçış yolu olmayan kapı atlanır — üçüncü yol tanımlı olmazsa ajanın önünde yalnız tavşan deliği veya rasyonelizasyon kalır.
 
 5. **Scope netleştirme** — proje sahibine sun:
    - Etkilenen modüller / dosyalar

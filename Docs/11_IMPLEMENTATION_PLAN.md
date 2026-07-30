@@ -85,18 +85,29 @@ Task TXX: [Task adı]
 
 ## 7. Traceability Matrix (ÖNCE BU)
 
-> **Ne yazılır:** Tüm önceki doküman çıktıları (entity, endpoint, ekran, entegrasyon, iş kuralı) → task eşlemesi. **Eşlenmeyen çıktı = eksik task.**
+> **Ne yazılır:** Matris **çift yönlüdür** (00 §C.3). Tek yön yeterli değildir — ileri yön eksik işi, geri yön gereksiz işi yakalar.
 
-### 7.1 Veri modeli → task
-### 7.2 API → task
-### 7.3 Entegrasyon → task
-### 7.4 Arayüz → task
-### 7.5 İş kuralı → task
+### 7.1 İleri izlenebilirlik (kaynak öğe → task)
+
+Tüm önceki doküman çıktıları (entity, endpoint, ekran, entegrasyon, iş kuralı) → task eşlemesi.
+**Eşlenmeyen çıktı = eksik task.**
+
+Alt bölümler: **7.1.1** Veri modeli → task · **7.1.2** API → task · **7.1.3** Entegrasyon → task · **7.1.4** Arayüz → task · **7.1.5** İş kuralı → task
 
 | Kaynak öğe | Task | Implement edildi | Kanıt |
 |---|---|---|---|
 
-> **Gate check kullanımı:** "Implement edildi" kolonu her faz sonunda kontrol edilir; eşlenip implement edilmeyen öğe **S3 Eksik** bulgusudur.
+### 7.2 Geri izlenebilirlik (task → kaynak öğe)
+
+Her task → hangi kaynak öğeden besleniyor?
+**Kaynağı olmayan task = gerekçesiz iş / sessiz kapsam genişlemesi.**
+
+| Task | Beslendiği kaynak öğe(ler) | Durum |
+|---|---|---|
+
+> **Neden geri yön de gerekli:** İleri yön yalnız **eksik** task'ı yakalar (S3). Planın kendisine sızmış, hiçbir gereksinime dayanmayan işi ise yalnız geri yön yakalar — ve o iş bir kez plana girdiğinde faz boyunca "planda var" gerekçesiyle sorgulanmadan yapılır.
+
+> **Gate check kullanımı:** "Implement edildi" kolonu her faz sonunda kontrol edilir; eşlenip implement edilmeyen öğe **S3 Eksik** bulgusudur. Kaynağı olmayan task gate'te **kapsam bulgusu** olarak raporlanır.
 
 ## 8. Boşluk raporu
 

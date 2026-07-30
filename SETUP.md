@@ -28,6 +28,15 @@
 - [ ] Teknoloji yığını belirlendi ve `.claude/CONTEXT.md` §1'e yazıldı
 - [ ] `.claude/CONTEXT.md` §3'e **kod klasörleri** klasör düzeyinde eklendi (dosya listesi **değil**)
 
+**Repo konfigürasyon dosyaları yığına uyarlanır** (bunlar template'te bilinçli olarak eksik bırakıldı — yığına bağlıdır):
+
+- [ ] `.gitignore`'a eklendi: bağımlılık klasörleri · derleme çıktısı · log / coverage / test sonucu · IDE artifact'ları
+- [ ] `.gitignore`'a eklendi: **projeye özgü sır dosyası desenleri** (sertifika, anahtar dosyası, sağlayıcıya özgü kimlik dosyası)
+- [ ] `.gitattributes`'a eklendi: projeye özgü **binary** dosya tipleri
+- [ ] `.env.example` şablonu oluşturuldu — **gerçek değerler `.env`'de ve gitignored**; strateji `Docs/05_TECHNICAL_ARCHITECTURE.md §6`'ya yazılacak
+
+> `.env` / `.env.*` / `!.env.example` varsayılanı template ile birlikte gelir; bu adım **yığına özgü** olanları ekler.
+
 > **Uyarı:** Teknoloji seçimi bir *doküman aşaması* kararıdır (`05_TECHNICAL_ARCHITECTURE.md`, aşama 4). Burada yalnızca **CI'ın çalışması için** gereken minimum bilgi kaydedilir. Yığın henüz belli değilse §4'ü aşama 4'ten sonra tamamlayın; o zamana kadar `SETUP_COMPLETE=false` kalır.
 
 ---
@@ -80,8 +89,9 @@
       ```
 - [ ] Layer 1 test edildi: `git push origin main` → **bloklanmalı**
 - [ ] commit-msg test edildi: `task/T99-test` dalında `git commit -m "T01: x"` → **bloklanmalı**
+- [ ] **Sır guard'ı test edildi:** içinde `API_KEY=sk_live_abcdef123456` olan bir dosyayı stage'leyip commit → **bloklanmalı**
 - [ ] Varsayılanlar değiştirilecekse `scripts/git-hooks/hooks.config` oluşturuldu
-      (`PB_PROTECTED_BRANCHES`, `PB_TASK_BRANCH_PREFIX`)
+      (`PB_PROTECTED_BRANCHES`, `PB_TASK_BRANCH_PREFIX`, `PB_SECRET_PATHS`, `PB_SECRET_KEYS`)
 - [ ] **Onboarding notu:** Her yeni klonda `install.sh` çalıştırılmalı — hook kurulmamış bir klonda bu koruma **yoktur**
 
 ---
@@ -100,6 +110,8 @@
 
 - [ ] `CLAUDE.md` okundu — ajan giriş noktası doğru dosyaları işaret ediyor
 - [ ] `Docs/00_PROJECT_METHODOLOGY.md` proje sahibiyle birlikte gözden geçirildi
+- [ ] **İkinci AI erişim yöntemi belirlendi** ve aşağıdaki kayıt tablosuna yazıldı — script / web arayüzü / API. Kalite döngüsünün üç ayağından biri cross-review'dur (`00 §C.5`, *"üçü birbirinin yerine geçmez"*); yöntem atanmazsa ilk dokümanın kalite döngüsü **yarım** kalır.
+- [ ] Paylaşılan ajan ayarları gözden geçirildi (`.claude/settings.json` izlenir; `settings.local.json` kişiseldir)
 - [ ] `Docs/PRODUCT_DISCOVERY_STATUS.md` açıldı, doküman durumu tablosu hazır
 - [ ] İlk oturum `.claude/checklists/document-stage.md` ile başlatıldı (Aşama 1 — Product Discovery)
 - [ ] Bu dosyadaki tamamlanan maddeler commit'lendi (`chore: setup`)
@@ -115,7 +127,12 @@
 | 3 | Hook'lar aktif | `git config core.hooksPath` |
 | 4 | Direct push bloklanıyor | `git push origin main` |
 | 5 | Guard job çalışıyor | Ana dala bir PR merge edip Actions'ta `0. Guard` sonucuna bak |
-| 6 | `<PROJE>` yer tutucusu kalmadı | `grep -r '<PROJE>' Docs/ .claude/` boş dönmeli |
+| 6 | Sır guard'ı çalışıyor | Sahte bir `API_KEY=...` satırını stage'leyip commit dene → bloklanmalı |
+| 7 | **Yer tutucu kalmadı** | `grep -rn '\`<[^>]*>\`' Docs/ .claude/ SETUP.md` boş dönmeli — `<PROJE>`, `<SETUP'ta doldurulur>`, `<discipline-only / …>` dahil **her** yer tutucuyu kapsar |
+| 8 | Tarih yer tutucusu kalmadı | `grep -rn 'YYYY-AA-GG' Docs/ .claude/` — yalnız **şablon** dosyalarında (`_TEMPLATE*.md`) kalmalı |
+| 9 | İkinci AI atandı | Aşağıdaki kayıt tablosunda satır dolu |
+
+> Kontrol 7'nin deseni bilinçli olarak **jeneriktir**: ileride eklenecek her yer tutucuyu otomatik kapsar. Belirli bir dizeyi (`<PROJE>`) aramak, o dizeyi bilmeyen yeni bir yer tutucuyu ağdan kaçırır — O-1 bulgusunun kaynağı buydu.
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Fikirden çalışan MVP'ye, bir AI ajanıyla.** Uygulama- ve teknoloji-bağımsız bir GitHub template.
 
-**Sürüm:** v1.0 · **Doküman dili:** Türkçe · **Kod dili:** İngilizce
+**Sürüm:** v1.0.1 · **Doküman dili:** Türkçe · **Kod dili:** İngilizce
 
 ---
 
@@ -65,8 +65,11 @@ Docs/
                              cross-review · checkpoint · handoff
   checklists/                Doküman üretim aşaması işletim checklist'i
   memory/                    Proje hafızası + terfi kuralı
+  settings.json              Paylaşılan ajan ayarları (izlenir)
+  hooks/                     Opsiyonel oturum hook'ları (hatırlatıcı, L5 değil)
 
-scripts/git-hooks/           commit-msg + pre-push (3 katman) + kurulum
+scripts/git-hooks/           pre-commit (sır guard'ı) + commit-msg
+                             + pre-push (3 katman) + kurulum
 .github/                     CI iskeleti + PR şablonu
 ```
 
@@ -88,8 +91,9 @@ scripts/git-hooks/           commit-msg + pre-push (3 katman) + kurulum
 
 | Mekanizma | Ne yapar |
 |---|---|
-| **Başlangıç kapıları** | Kirli working tree, kırık ana dal CI veya güncellenmemiş hafıza ile hiçbir oturum başlamaz |
-| **Üç katmanlı hook** | Direct push · kırık CI üstüne push · bir task'ın kodunun başka bir PR'a gömülmesi — üçü de `exit 1` |
+| **Başlangıç kapıları** | Kirli working tree, kurulmamış hook, kırık ana dal CI veya güncellenmemiş hafıza ile hiçbir oturum başlamaz |
+| **Dört katmanlı hook** | Sır sızıntısı · direct push · kırık CI üstüne push · bir task'ın kodunun başka bir PR'a gömülmesi — dördü de `exit 1` |
+| **Boot provası** | "Servisleri ayağa kaldır" test konfigürasyonuyla tatmin edilebilir; kapanışta **gerçek dağıtım konfigürasyonu** zorunludur |
 | **Dış varsayım ön-uçuş kontrolü** | Kod yazılmadan önce plan/sürüm/platform/sözleşme varsayımları **kanıtla** doğrulanır |
 | **Bitiş kapısı** | PR açılmadan, CI **sonuçlanmadan** ve hafıza güncellenmeden task "bitti" sayılmaz |
 | **Ertelenmiş işler backlog'u** | "Şimdi değil" kararı yazılmadan erteleme sayılmaz |

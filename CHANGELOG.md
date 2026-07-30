@@ -9,6 +9,27 @@ Bu template kendi sürümünü taşır. Yeni projelerdeki öğrenimler buraya ge
 
 ---
 
+## v1.0.1 — 2026-07-30
+
+Bağımsız doğrulama + ikinci tur adversarial inceleme sonrası düzeltme turu.
+
+**Kapatılan kayıp kurallar:**
+- Doğrulama matrisine **Durum** sütunu (`BEKLEMEDE / PASS / FAIL / KABUL EDİLMİŞ RİSK`) ve *"ön koşulu sağlanmayan madde BEKLEMEDE kalır"* giriş kuralı — `BEKLEMEDE` bir sonuç olarak kullanılıyor ama tanımlı değildi, dolayısıyla final gate'in *"hiçbir madde beklemede olamaz"* şartı mekanik olarak cevaplanamıyordu
+- Matrise **Kanıt ortamı** (mock / sandbox / gerçek) alanı — mock'la ilgili iki sonuç kuralı vardı, ikisinin de dayandığı veriyi üreten kural yoktu
+- `.gitignore` sır varsayılanları (`.env` / `.env.*` / `!.env.example`) ve ajan runtime artifact'ı
+- Implementation planı traceability matrisine **geri izlenebilirlik** (task → kaynak öğe): kaynağı olmayan task = gerekçesiz iş
+
+**Yeni savunma katmanları:**
+- **`pre-commit` sır guard'ı** — staged içerikte sır dosyası yolu, private key bloğu veya bilinen anahtara gerçek değer ataması. Bilinçli olarak jenerik; projeye özgü desenler `hooks.config`'te
+- **`core.hooksPath` oturum kapısı** — hook'lar kurulu değilse mekanik katmanın tamamı sessizce yoktur; artık her yapım ve doğrulama oturumunun Adım -1'inde kontrol edilir
+- **Gerçek konfigürasyonla boot provası** — faz gate'i "servisleri ayağa kaldır" der ama test konfigürasyonuyla tatmin edilebilir; kapanış ritüelinde gerçek dağıtım konfigürasyonu zorunlu (`00 §L.1`)
+
+**Güçlendirmeler:** ön-uçuş kontrolüne tetikleyici tarama listesi + 5 dk zaman kutusu · secret dağıtım yarıçapı (blast radius) + rotation · süreç baseline valfi · seed edilemeyen kayıt sınıfı ve bootstrap script'i · deep-review güvenlik katmanına OWASP çapası · re-validation sonuç kuralları · `.claude/settings.json` + opsiyonel oturum hook'u katmanı.
+
+**Hijyen:** 7 hedefsiz bölüm/yol referansı kapatıldı · `SETUP` doğrulaması jenerik yer-tutucu desenine çevrildi · `SETUP`'a repo-config ve ikinci-AI atama adımları eklendi.
+
+---
+
 ## v1.0 — 2026-07-27
 
 İlk sürüm. Gerçek bir projede fikirden MVP'ye kadar fiilen uygulanan yöntemin konsolide edilmiş hâli.

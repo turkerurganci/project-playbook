@@ -58,6 +58,17 @@ Bu bir parametre değildir; template'in sabitidir.
 
 Ajan aşamaya göre rol değiştirir. Hangi aşamada hangi rol — §C.1 tablosunda. Bulunduğun aşama teknik değilse teknik detaya girme: *"Bu teknik bir karar, şimdi ürün kararını alalım."*
 
+### A.7 Süreç baseline'ı — sürecin kendisi ne zaman gözden geçirilir
+
+**İlk 3–5 task süreç yazıldığı gibi işletilir.** Revizyon ancak gözlem kanıtı biriktikten sonra meşrudur.
+
+Bu bir valftir ve iki yönü de bağlar:
+
+- **Erken gevşetmeye karşı:** Bir kapı ilk kez rahatsız ettiğinde ("bu task için gereksiz", "bu sefer küçük değişiklik") sürecin değil, disiplinin sınandığı andır. Kapı ilk sürtünmede kaldırılmaz.
+- **Sonsuz katılığa karşı:** §K öğrenimleri kurala **terfi ettirir**, §A.2 adım atlamayı **yasaklar** — ikisi de tek yönlü cırcırdır. Bu madde ters yönü meşrulaştırır: birkaç task'lık somut gözlem, bir kuralın maliyetinin faydasını aştığını gösteriyorsa, o kural gate'te gerekçesiyle revize edilebilir.
+
+**Revizyon nerede yapılır:** Faz gate'inin öğrenim terfisi adımında (§K), gerekçesi ve gözlem kanıtıyla birlikte. Oturum ortasında, sürtünme anında değil.
+
 ---
 
 ## B. Yol haritası
@@ -417,12 +428,18 @@ Her yapım ve doğrulama chat'i üç kapıdan geçerek başlar:
 
 | Katman | Mekanizma | Bloklar |
 |---|---|---|
+| **pre-commit hook** | Staged içerikte sır kalıbı (sır dosyası yolu, PEM bloğu, bilinen anahtar adına gerçek değer ataması) | Sır sızıntısı — **commit anında** |
 | **commit-msg hook** | `task/TXX-*` dalındaki commit subject'i farklı bir TXX referansı içeriyorsa | Bundled commit — **commit anında** |
 | **pre-push Layer 1** | Korunan dallara (`main`, varsa `develop`) direct push | Direct push |
 | **pre-push Layer 2** | Push edilen dalın son CI run'ı `failure`/`cancelled`/`timed_out` | Kırık CI üstüne push |
 | **pre-push Layer 3** | Dalda yabancı TXX commit'i (`git log main..HEAD` taraması) | Bundled PR — **push anında** |
 | **CI job 0 — guard** | Ana dala gelen commit mesajında PR referansı `(#NN)` yok | Server-side görünür uyarı (push'u engelleyemez ama iz bırakır) |
+| **Oturum kapısı — hook kurulumu** | `git config core.hooksPath` boş | Yukarıdaki **tüm** hook katmanlarının sessizce yok olması |
 | **Bitiş kapısı manuel check** | Aynı `git log` taraması, hook kurulu değilse son savunma | Bundled PR — **PR öncesi** |
+
+> **Hook'lar kurulu değilse bu tablonun ilk beş satırı yoktur.** `install.sh` çalıştırılmamış her klonda ve her efemeral ortamda (bulut oturumu, geçici konteyner, CI çalışma alanı) koruma **sıfırdır** ve bu **gözlemlenebilir değildir** — tıpkı kırık CI'nin sessizce sürmesi gibi. Bu yüzden `core.hooksPath` kontrolü her yapım ve doğrulama oturumunun **Adım -1**'ine gömülüdür, tek seferlik bir kurulum adımı değildir.
+
+**Opsiyonel oturum hook'ları:** Ajan harness'ı destekliyorsa, kuralları *hatırlatan* (bloklamayan) oturum hook'ları eklenebilir — örneğin merge algılandığında çalışan workflow ID'lerini bağlama enjekte eden bir hatırlatıcı. Bunlar L5 sayılmaz (`exit 1` vermezler), platforma bağlıdırlar ve **kuralın yerine geçmezler**; kayıt yerleri `.claude/settings.json` + `.claude/hooks/`'tur.
 
 **Bypass:** `PB_ALLOW_DIRECT_PUSH=1` (Layer 1+2) ve `PB_ALLOW_BUNDLED=1` (Layer 3 + commit-msg). Her ikisi de `PB_BYPASS_REASON="..."` ile kullanılır ve hook `BYPASS_LOG.md`'ye otomatik satır düşer (`[direct-push]` / `[ci-failure]` / `[bundled-pr]`). CI guard bypass'ı: commit mesajında `[skip-guard]`.
 
@@ -432,7 +449,13 @@ Her yapım ve doğrulama chat'i üç kapıdan geçerek başlar:
 
 Kod yazmadan ve scope'u kesinleştirmeden önce, task'ın dayandığı dış varsayımlar **listelenir ve her biri somut kanıtla doğrulanır**.
 
-Tipik kategoriler:
+**Adım 1 — Varsayımı fark et (tetikleyici tarama).** Kabul kriterlerini ve plan metnini şu terimler için tara; biri geçiyorsa orada bir dış varsayım vardır:
+
+> plan tier · ücretsiz / paid / trial / subscription / Pro / Team / Enterprise · kota · rate limit · API key · onay süreci · dal koruması · zorunlu review · runner / dakika / depolama limiti · paket sürümü · registry · sandbox / test ortamı · bölge kısıtı · SLA
+
+Kaynak kuralın doğduğu vakada sorun kanıt üretememek değil, **varsayımın var olduğunun fark edilmemesiydi**. Kategori listesi bir sınıflandırmadır; tarama listesi tespit aracıdır — ikisi aynı şey değildir.
+
+**Adım 2 — Doğrula.** Tipik kategoriler:
 - **Plan tier / feature availability** — ücretli mi ücretsiz mi, hangi plan gerekli
 - **Paket sürüm uyumu** — planda geçen sürüm gerçekten var mı (registry sorgusu)
 - **Platform/OS farkı** — path, tip, base image, geliştirme ≠ CI ortamı
@@ -443,6 +466,10 @@ Tipik kategoriler:
 
 - Varsayım kırıksa **DURULUR** — bu scope'u etkileyen bir karardır. Seçenekler proje sahibine sunulur, gerekirse BLOCKED tetiklenir.
 - *"Bu task'ta dış varsayım yok"* geçerli bir sonuçtur — ama rapora **açıkça yazılır**. Audit trail'in eksikliği ≠ varsayımın yokluğu.
+
+**Zaman kutusu — kapının maliyeti sınırsız değildir.** Bir varsayımın doğrulanması **~5 dakikalık** bir iştir (komut çalıştır, dokümana bak, tek bir çağrı yap). Daha uzun sürecekse (derin doküman okuma, ücretli kayıt, onay bekleyen erişim) **durulur ve proje sahibine taşınır**: *"Bu varsayımı doğrulamam ~X dakika alacak, devam edeyim mi?"*
+
+> Bu üçüncü yol olmadan kapının önünde yalnız iki seçenek kalır: tavşan deliğine düşmek veya rasyonelize edip atlamak. İkincisi tam olarak bu kapının önlemek için var olduğu davranıştır — kaçış yolu olmayan kapı atlanır.
 
 > **Vaka:** Bir CI/CD task'ı, platformun dal koruma özelliğinin mevcut planda kullanılabilir olduğunu varsaydı. Implementasyonun ortasında API 403 "yükseltme gerekli" döndü. Bedel: 3 düzeltme commit'i, gerçekleşmemiş iddialar içeren bir kapanış commit'i, re-validation talebi, iki dokümanda rejim değişikliği. Plan aşamasında **5 dakikalık** bir kontrol bunu önlerdi.
 
@@ -606,10 +633,28 @@ MVP'nin son fazı (uçtan uca doğrulama) PASS aldığında:
 | 3 | Status finalize | `IMPLEMENTATION_STATUS.md` — tüm fazlar ✓, "sırada ne var" alanı **açıkça** post-MVP backlog ile deploy hazırlığı arasındaki seçimi proje sahibine bırakır |
 | 4 | Memory finalize | Repo memory + oturum hafızası güncel snapshot'a çekilir; arşiv ayrılır |
 | 5 | Runbook config | `DEPLOY_RUNBOOK.md` zorunlu ayar/secret listesiyle tamamlanır — **prod'da hangi ayar set edilmezse sistem açılmaz** ve **hangisi set edilmezse bir kural sessizce devre dışı kalır** ayrımı yazılır |
-| 6 | Öğrenim terfileri | §K |
-| 7 | Tag | `phase/FX-pass` |
+| 6 | **Gerçek konfigürasyonla boot provası** | Runbook **yazılmakla kalmaz, bir kez çalıştırılır**: gerçek dağıtım konfigürasyonu (test/E2E konfigürasyonu **değil**) ile sistem sıfırdan ayağa kaldırılır, sağlık uçları doğrulanır, sonuç runbook'a yazılır. Detay: §L.1 |
+| 7 | Öğrenim terfileri | §K |
+| 8 | Tag | `phase/FX-pass` |
 
 > **Vaka:** Bir projede bir güvenlik kuralı kod olarak tamamdı ama iki üretim ayarı varsayılan değerlerinde bırakılırsa **sessizce devre dışı** kalıyordu. Bu, kod borcu değil **deploy runbook** borcuydu; kapanış ritüelinin 5. adımı bunu yakalar.
+
+### L.1 Boot provası — "hangi konfigürasyonla" sorusu
+
+Faz gate'leri *"tüm servisleri sıfırdan ayağa kaldır"* der (§E.2 adım 3). Bu cümlenin sessiz boşluğu şudur: **hangi konfigürasyonla?**
+
+Test/E2E konfigürasyonu bu gereği "tatmin eder" — sahte servisler, sabit test değerleri, ayrı bir compose dosyası. Gerçek dağıtım konfigürasyonu ise hiç denenmemiş olabilir.
+
+> **Vaka:** Bir projede son faz gate'i ✓ PASS aldı: sekiz uçtan uca senaryo yeşildi, ortam ayağa kalkıyordu, migration temizdi. Ama o ortam **E2E harness'ının kendi konfigürasyonuydu**. Gerçek dağıtım konfigürasyonu ilk kez kapanıştan sonra denendi ve **hiç açılmadı**: zorunlu ayarlar servise geçirilmiyordu (fail-fast), servisler arası kimlik anahtarı iletilmiyordu, kimlik sağlayıcı geri dönüş adresleri ölü bir alan adına bakıyordu. Hiçbir test bunu yakalayamazdı — çünkü hiçbir test o konfigürasyonu kullanmıyordu.
+
+**Kural:** Kapanış ritüelinde sistem **gerçek dağıtım konfigürasyonuyla** en az bir kez ayağa kaldırılır. Prova şunları kanıtlar:
+
+1. Zorunlu ayarların **tamamı** ortama gerçekten geçiyor (§A listesi çalışıyor)
+2. Servisler/bileşenler arası kimlik ve adresler gerçek değerlerle çözülüyor
+3. Sağlık uçları gerçek konfigürasyonda yanıt veriyor
+4. Boot reçetesi runbook'ta yazılı olduğu gibi **tekrarlanabilir** (ikinci kişi aynı adımlarla açabilir)
+
+Prova sonucu `DEPLOY_RUNBOOK.md`'ye yazılır: ne çalıştı, ne kırıldı, hangi ayar eksikti. **Kırılan her şey bir runbook satırına dönüşür** — bu provanın asıl çıktısı budur.
 
 **Kapsam notu:** Bu playbook prod operasyon pratiğini (sürüm döngüsü, incident yönetimi, canlı izleme) **içermez** — o dönem yaşanmadan yazılmaz. Runbook katmanı deploy'a kadar götürür; ötesi bir sonraki sürümün konusudur.
 

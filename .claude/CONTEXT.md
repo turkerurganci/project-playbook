@@ -72,12 +72,14 @@ Bir dosyanın nerede olduğunu öğrenmek için dosya sistemine bak. Bir klasör
 | `.claude/skills/` | İş akışı skill'leri | Öğrenim terfilerinde |
 | `.claude/checklists/` | Skill'e dönüşmemiş işletim checklist'leri | Aynı |
 | `.claude/memory/` | Proje hafızası + kişisel çalışma tercihleri | Her task/faz kapanışında |
+| `.claude/hooks/` | **Opsiyonel** oturum hook'ları (hatırlatıcı, bloklamaz — L5 değil) | Nadiren |
+| `.claude/settings.json` | Paylaşılan ajan ayarları — **izlenir** (hook kayıtları + ekip izin listesi) | Hook eklendiğinde |
 
 ### `scripts/` ve `.github/` — L5 mekanik zorlama
 
 | Yol | Rol | Kim günceller |
 |---|---|---|
-| `scripts/git-hooks/` | commit-msg + pre-push (3 katman) + kurulum | Nadiren; değişimi ayrı `hooks:` PR'ı ister |
+| `scripts/git-hooks/` | pre-commit (sır guard'ı) + commit-msg + pre-push (3 katman) + kurulum | Nadiren; değişimi ayrı `hooks:` PR'ı ister |
 | `.github/workflows/` | CI pipeline + (varsa) yayınlama workflow'u | CI task'ında + pipeline genişledikçe |
 | `.github/ci-commands.env` | Teknoloji-spesifik CI komutları (SETUP'ta doldurulur) | Kurulumda + yeni test katmanı eklendiğinde |
 | `.github/pull_request_template.md` | PR şablonu | Nadiren |

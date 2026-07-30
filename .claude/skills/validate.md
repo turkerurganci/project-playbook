@@ -28,6 +28,14 @@ git status --short
 - Boş → devam.
 - Değişiklik var → **HARD STOP.** Kullanıcıya listele, commit / stash / discard kararı iste. *"Sonra hallederiz"* yasak.
 
+**Aynı adımda — hook kurulum kontrolü (HARD STOP):**
+
+```bash
+git config core.hooksPath
+```
+
+Çıktı `scripts/git-hooks` değilse **dur**, `bash scripts/git-hooks/install.sh` çalıştır, doğrula. Hook'lar kurulu değilse mekanik katmanın tamamı sessizce yoktur — ve doğrulama chat'i mekanik katmanın çalıştığını **varsayarak** verdict verir. Bu varsayım kontrol edilmeden doğrulama başlamaz.
+
 ### Adım 0 — Ana dal CI startup check (HARD STOP)
 
 ```bash

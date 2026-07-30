@@ -13,6 +13,7 @@
 | `[direct-push]` | Korunan dala direct push bypass'ı (`PB_ALLOW_DIRECT_PUSH=1`, pre-push Layer 1) |
 | `[ci-failure]` | Dalın son CI run'ı başarısızken push bypass'ı (`PB_ALLOW_DIRECT_PUSH=1`, pre-push Layer 2) |
 | `[bundled-pr]` | Dal izolasyon bypass'ı (`PB_ALLOW_BUNDLED=1`, commit-msg veya pre-push Layer 3). Ayrıca: bir task'ın PR'ı açılmadan başka bir PR'a gömülmesi (bitiş kapısı ihlali) de bu etiketi alır. |
+| `[secret]` | Sır guard'ı bypass'ı (`PB_ALLOW_SECRET=1`, pre-commit). **Diğerlerinden farklıdır:** yanlış pozitifse desen daraltılır; gerçek sır commit'lendiyse olay **geri alınamaz** — değer döndürülür, geçmiş temizliği yeterli değildir. |
 | `[skip-guard]` | CI guard job bypass'ı (commit mesajında `[skip-guard]`) — hook değil, CI tarafı |
 
 ---

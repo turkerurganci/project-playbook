@@ -40,6 +40,22 @@
 
 > **Ne yazılır:** Kimlik doğrulama, yetkilendirme, secret yönetimi, servisler arası kimlik, hız sınırlama, hassas veri saklama.
 
+### 6.x Secret yönetimi (bu alt bölüm zorunludur)
+
+Üç soru **gün 0'da** cevaplanır — ikinci bileşen (servis, worker, yardımcı süreç) doğduğu anda karar verilmiş olur ve sonradan geri almak tüm dağıtım yüzeyini yeniden yazmak demektir:
+
+| Soru | Ne yazılır |
+|---|---|
+| **Nerede durur** | Ortam değişkeni / secret store / dosya. Değerler **asla** repo'da; repo yalnız **şablonu** izler (`.env.example`) ve `.gitignore` bunu mekanik olarak zorlar. |
+| **Dağıtım yarıçapı (blast radius)** | Her secret **yalnız onu kullanan bileşene** geçilir. İmza/anahtar materyali diğer bileşenlere hiç verilmez. Paylaşılan bir secret varsa **bileşen-başı varyantı** olur — böylece bir sızıntı ikinci yüzeyi açmaz. |
+| **Rotation** | Her secret için: kim üretir, ne sıklıkla döner, dönerken sistem ayakta kalır mı, eski değer ne kadar geçerli kalır. |
+
+**Ek kurallar:**
+- Loglarda maskeleme: secret ve token değerleri log çıktısına **hiçbir seviyede** yazılmaz.
+- Secret envanteri `DEPLOY_RUNBOOK.md §B`'de tutulur — bu bölüm **stratejiyi**, runbook **envanteri** taşır.
+
+> Template'in geri kalanı sırrı yalnız tek eksende yasaklar ("koda gömme"). Sırrın **nereye dağıtıldığı** ayrı bir karardır ve yalnız burada sorulur.
+
 ## 7. Veri katmanı kararları
 
 > **Ne yazılır:** Veritabanı seçimi, eşzamanlılık kontrolü, saklama/silme stratejisi, yedekleme. Şema `06`'da.

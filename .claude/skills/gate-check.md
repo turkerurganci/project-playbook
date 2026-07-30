@@ -33,6 +33,11 @@
 
 9. **Fresh environment smoke test** — tüm servisleri sıfırdan ayağa kaldır, health check'leri doğrula, sonra temizle. Servislerin **hepsi** ayağa kalkmalı.
 
+   **⚠ Hangi konfigürasyonla?** Bu adım **test/E2E konfigürasyonuyla** tatmin edilebilir — ve genellikle öyle olur, çünkü o konfigürasyon zaten çalışır durumdadır. Rapora **hangi konfigürasyonun kullanıldığı açıkça yazılır**.
+
+   - Ara fazlarda test konfigürasyonu **kabul edilebilir**.
+   - **Son fazda (kapanış) gerçek dağıtım konfigürasyonu zorunludur** — bkz. `00 §L.1` boot provası. Bir referans projede son gate, E2E harness'ının kendi konfigürasyonuyla ✓ PASS aldı; gerçek dağıtım konfigürasyonu ilk kez kapanıştan sonra denendi ve **hiç açılmadı**.
+
 ---
 
 ## Adım 3 — Migration rehearsal (veri katmanı fazından itibaren)

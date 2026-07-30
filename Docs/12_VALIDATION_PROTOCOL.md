@@ -57,18 +57,53 @@
 
 ## 4. Doğrulama matrisi
 
-> **Ne yazılır:** Her doğrulama maddesi bir satır. ID, seviye, ne kontrol edilir, başarı kriteri, kanıt türü, severity, kaynak referansı.
+> **Ne yazılır:** Her doğrulama maddesi bir satır.
 
-| ID | Seviye | Ne kontrol edilir | Başarı kriteri | Kanıt | Severity | Kaynak |
-|---|---|---|---|---|---|---|
-| VAL-A001 | A | | | | KRİTİK/ORTA/DÜŞÜK | 02 §… |
+| Sütun | Açıklama |
+|---|---|
+| **ID** | Benzersiz tanımlayıcı (`VAL-NNN`) |
+| **Seviye** | A–F (§3) |
+| **Kural / Gereksinim** | Doğrulanacak iş kuralı veya davranış |
+| **Kaynak** | Kuralın tanımlandığı doküman ve bölüm |
+| **Ön koşul** | Doğrulama öncesi sağlanması gereken durum |
+| **Beklenen sonuç** | PASS için sağlanması gereken koşul |
+| **Kanıt türü** | Kabul edilen kanıt(lar) — §7 |
+| **Kanıt ortamı** | `mock` / `sandbox` / `gerçek` — kanıtın hangi ortamda üretildiği |
+| **Severity** | KRİTİK / ORTA / DÜŞÜK — §8 |
+| **Durum** | `BEKLEMEDE` / `PASS` / `FAIL` / `KABUL EDİLMİŞ RİSK` |
+
+| ID | Seviye | Kural | Kaynak | Ön koşul | Beklenen sonuç | Kanıt türü | Kanıt ortamı | Severity | Durum |
+|---|---|---|---|---|---|---|---|---|---|
+| VAL-A001 | A | | 02 §… | | | | mock/sandbox/gerçek | KRİTİK/ORTA/DÜŞÜK | BEKLEMEDE |
+
+### 4.1 Durum tanımları
+
+| Durum | Anlamı |
+|---|---|
+| `BEKLEMEDE` | Ön koşulu sağlanmadığı için **henüz doğrulanamadı**. PASS da FAIL da değildir. |
+| `PASS` | Kanıtla doğrulandı |
+| `FAIL` | Beklenen sonuç sağlanmadı — §8 akışı başlar |
+| `KABUL EDİLMİŞ RİSK` | FAIL ama proje sahibi onayıyla kayda alındı (§8.4). KRİTİK olamaz. |
+
+**Neden ayrı bir alan:** `§6.3` final çıkışı *"hiçbir KRİTİK madde FAIL veya BEKLEMEDE olamaz"* der. Durum bir alanda tutulmuyorsa bu soru **mekanik olarak cevaplanamaz** — "hangi maddeler hâlâ beklemede?" sorusu 200 madde arasında elle aranır ve pratikte hiç sorulmaz.
+
+**Neden kanıt ortamı ayrı bir alan:** `§6.3` ve `§11` mock ile alınmış PASS'lere iki farklı sonuç bağlar (final gate'i geçemez · gerçek entegrasyona geçince geçersizleşir). Hangi maddenin mock ile PASS aldığı kaydedilmiyorsa **her iki kural da sessizce devre dışı kalır** — bu, playbook'un önlemek için var olduğu defekt sınıfının ta kendisidir.
 
 ---
 
 ## 5. Giriş kriterleri
 
 > **Ne yazılır:** Bir doğrulamanın başlayabilmesi için sağlanması gerekenler (seviye bazlı).
-> **Değişmez kapılar (00 §F.1):** working tree temiz · ana dal CI son 3 run yeşil · repo hafızası güncel.
+
+**Değişmez kapılar (00 §F.1):** working tree temiz · ana dal CI son 3 run yeşil · repo hafızası güncel · hook'lar kurulu (`git config core.hooksPath`).
+
+**Değişmez giriş kuralları:**
+
+| # | Kural |
+|---|---|
+| 1 | **Ön koşulu sağlanmayan madde `BEKLEMEDE` kalır — PASS veya FAIL verilemez.** Doğrulanamayan bir maddeyi FAIL saymak yanlış sinyal, PASS saymak kanıtsız onaydır. |
+| 2 | **Mock/gerçek ayrımı kayıt altındadır.** Seviye E (entegrasyon) doğrulaması, hangi dış servisin mock, hangisinin gerçek olduğu kaydedilmeden **başlatılamaz**. Kayıt yeri: matrisin "Kanıt ortamı" sütunu. |
+| 3 | Task bazlı doğrulama, task'ın kabul kriterleri ve doğrulama kontrol listesi `11`'de tanımlı olmadan başlatılamaz. |
 
 ---
 
@@ -214,6 +249,15 @@ Aynı ajan aynı task için iki rolü üstlenemez.
 | Faz geçişi | Yeni kodun etkileyebileceği önceki faz maddeleri |
 | Konfigürasyon değişikliği | Değişen parametreye bağımlı maddeler |
 | Altyapı değişikliği | Şema değişimi, ortam değişimi, bağımlılık güncellemesi → etkilenen seviyedeki tüm maddeler |
+
+### 11.1 Yeniden doğrulama sonuçları
+
+| # | Kural |
+|---|---|
+| 1 | Re-validation sonucu orijinal maddenin **Durum** alanını günceller. |
+| 2 | **Re-validation'da FAIL çıkarsa bu bir regresyondur** — normal bir FAIL gibi işlenmez; §8 akışı **S2 Kırılma** olarak başlar. Daha önce PASS almış bir maddenin geri düşmesi, yeni bir maddenin FAIL almasından farklı bir sinyaldir. |
+| 3 | **En güncel kanıt geçerlidir.** Yeni kanıt eskisinin yerine geçer; eski kanıt arşivde kalır ama geçerliliğini yitirir. Aynı madde için iki çelişen kanıt yan yana bırakılmaz. |
+| 4 | Mock ile alınmış PASS'ler gerçek entegrasyona geçildiğinde **geçersiz sayılır** ve madde `BEKLEMEDE`'ye döner (§6.3). |
 
 ---
 

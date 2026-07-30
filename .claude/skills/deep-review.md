@@ -51,8 +51,9 @@
 - Her veri akışında *"bu manipüle edilebilir mi?"*
 - Kimlik doğrulama, yetkilendirme, input validation, şifreleme katmanları
 - Webhook/callback'lerde imza doğrulama
-- Hassas veri (key, secret, token) saklama stratejisi
+- Hassas veri (key, secret, token) saklama stratejisi **ve dağıtım yarıçapı** (hangi bileşen hangi sırrı alır)
 - Rate limiting kritik yüzeylerde tanımlı mı
+- **OWASP Top 10 perspektifinden değerlendir** — adlandırılmış, teknoloji-bağımsız bir çerçeve, katmanı denetlenebilir kılar: *"neye göre baktın?"* sorusunun cevabıdır. Çerçevesiz güvenlik katmanı serbest-form bir okumaya iner.
 
 ### Katman 5 — Hata modu (Failure Mode)
 **Soru:** Her bileşen çökerse ne olur?

@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # SETUP.md §4.2: dil/runtime kurulum adimlarini buraya ekleyin.
+      # SETUP.md §4: dil/runtime kurulum adimlarini buraya ekleyin.
       - run: bash .github/ci-run.sh LINT_CMD "1. Lint"
 
   build:

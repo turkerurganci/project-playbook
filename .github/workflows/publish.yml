@@ -8,7 +8,7 @@ name: Publish
 # tum workflow'larin conclusion'i beklenir, biri success digeri devam ederken
 # "bitti" denmez.
 #
-# Projede yayinlanacak artifact yoksa bu dosya SILINIR (SETUP.md §4.4).
+# Projede yayinlanacak artifact yoksa bu dosya SILINIR (SETUP.md §4).
 
 on:
   push:
@@ -29,5 +29,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # SETUP.md §4.4: registry login / auth adimlarini buraya ekleyin.
+      # SETUP.md §4: registry login / auth adimlarini buraya ekleyin.
       - run: bash .github/ci-run.sh PUBLISH_CMD "Publish"
