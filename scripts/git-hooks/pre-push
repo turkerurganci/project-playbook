@@ -26,6 +26,13 @@ TXX_PATTERN='^T[0-9]+(\.[0-9]+)?[a-z]?'
 
 log_bypass() {
   # $1 = branch, $2 = kind (direct-push | ci-failure | bundled-pr), $3 = extra note
+  #
+  # The commit recorded is the tip of the ref BEING PUSHED ($pushing_oid, read
+  # from stdin by the loop below) — not HEAD. Pushing a branch you are not
+  # standing on is ordinary: `git push origin main` from a topic branch, or a
+  # bootstrap push to a brand-new remote. Recording HEAD there names a commit
+  # that never crossed the gate, and a bypass entry whose only job is to say
+  # WHICH commit skipped the gate is worthless if it names the wrong one.
   local branch="$1" kind="$2" note="${3:-}"
   local repo_root log_file timestamp git_user short_sha reason
   repo_root="$(git rev-parse --show-toplevel 2>/dev/null)" || return 0
@@ -33,7 +40,7 @@ log_bypass() {
   [ -f "$log_file" ] || return 0
   timestamp="$(date -u '+%Y-%m-%d %H:%M UTC')"
   git_user="$(git config user.name || echo 'unknown')"
-  short_sha="$(git rev-parse --short HEAD 2>/dev/null || echo 'unknown')"
+  short_sha="$(git rev-parse --short "${pushing_oid:-HEAD}" 2>/dev/null || echo 'unknown')"
   reason="${PB_BYPASS_REASON:-*(sebep belirtilmedi)*}"
   echo "| $timestamp | $git_user | $branch | \`$short_sha\` | **[$kind]** $reason $note |" >> "$log_file"
   echo "BYPASS LOG: Docs/BYPASS_LOG.md'ye kayit eklendi ($kind)." >&2
@@ -63,7 +70,7 @@ check_ci_status() {
   esac
 }
 
-while read -r _local_ref _local_oid remote_ref _remote_oid; do
+while read -r _local_ref pushing_oid remote_ref _remote_oid; do
   pushing_branch="${remote_ref#refs/heads/}"
 
   # --- Layer 1: protected branch direct push -------------------------------

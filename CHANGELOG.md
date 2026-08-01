@@ -9,6 +9,18 @@ Bu template kendi sürümünü taşır. Yeni projelerdeki öğrenimler buraya ge
 
 ---
 
+## v1.0.3 — 2026-08-01
+
+**Bypass kaydı yanlış commit'i yazıyordu.** `pre-push` `log_bypass()` fonksiyonu `git rev-parse --short HEAD` kullanıyordu; oysa kaydedilmesi gereken **push edilen ref'in tepesi**. Üzerinde durmadığınız bir dalı push etmek olağandır — topic dalındayken `git push origin main`, ya da yeni bir remote'a bootstrap push'u. O durumda kayıt, kapıyı hiç atlamamış bir commit'i işaret ediyordu.
+
+Bir bypass kaydının tek işi **hangi commit'in kapıyı atladığını** söylemektir; yanlış hash o kaydı işlevsiz bırakır. Döngü zaten stdin'den push edilen OID'i okuyordu (`_local_oid`), yalnız kullanılmıyordu — kullanılır hâle getirildi.
+
+Fonksiyonel olarak doğrulandı (izole bare remote, üç senaryo): topic dalındayken `main` push'u artık `main`'in tepesini kaydediyor · üzerinde durduğunuz dalı push etmek regresyona uğramadı · Layer 3 `bundled-pr` yolunda hem hash doğru hem yabancı TXX notu korunuyor.
+
+Bu defektin kendisi v1.0.2'nin yayın push'unda canlı olarak gözlendi.
+
+---
+
 ## v1.0.2 — 2026-08-01
 
 Şablonun kendi üzerinde çalıştırılan doğrulama turu sonrası düzeltme.
