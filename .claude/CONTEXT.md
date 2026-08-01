@@ -1,6 +1,6 @@
 # Proje Bağlamı ve Klasör Haritası
 
-**Katman:** L3 | **Son güncelleme:** 2026-07-30
+**Katman:** L3 | **Son güncelleme:** 2026-08-01
 
 ---
 
@@ -69,7 +69,7 @@ Bir dosyanın nerede olduğunu öğrenmek için dosya sistemine bak. Bir klasör
 | `.claude/INSTRUCTIONS.md` | Oturum davranışı | Öğrenim terfilerinde |
 | `.claude/GUARDRAILS.md` | Sınırlar ve yasaklar | Öğrenim terfilerinde |
 | `.claude/CONTEXT.md` | Bu dosya — klasör haritası | Yeni **klasör** açıldığında |
-| `.claude/skills/` | İş akışı skill'leri | Öğrenim terfilerinde |
+| `.claude/skills/` | İş akışı skill'leri — her skill kendi klasöründe `<ad>/SKILL.md` (frontmatter'sız düz `.md` kayıt olmaz) | Öğrenim terfilerinde |
 | `.claude/checklists/` | Skill'e dönüşmemiş işletim checklist'leri | Aynı |
 | `.claude/memory/` | Proje hafızası + kişisel çalışma tercihleri | Her task/faz kapanışında |
 | `.claude/hooks/` | **Opsiyonel** oturum hook'ları (hatırlatıcı, bloklamaz — L5 değil) | Nadiren |

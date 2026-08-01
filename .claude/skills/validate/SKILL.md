@@ -1,3 +1,9 @@
+---
+name: validate
+description: "Tamamlanmış bir task'ı bağımsız doğrular — kabul kriterleri kanıtla, CI kontrolü, güvenlik taraması, verdict ve merge. Kullan: 'TXX doğrula', /validate TXX. AYRI chat'te çalıştırılır; yapan denetlemez."
+user-invocable: true
+---
+
 # Validate — Bağımsız Doğrulama Chat'i
 
 > **Ne zaman:** Bir task'ın yapım chat'i bittikten sonra, **ayrı bir chat'te**.

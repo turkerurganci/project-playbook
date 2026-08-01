@@ -4,4 +4,4 @@
 
 **Denetlenebilirlik kuralı:** Bir audit raporu, envanter toplamı ile eşleştirme sayısı **eşleşmiyorsa** geçersizdir — öğe atlanmış demektir. Rapor bu iki sayıyı açıkça gösterir.
 
-Prosedür: [`.claude/skills/audit.md`](../../.claude/skills/audit.md)
+Prosedür: [`.claude/skills/audit/SKILL.md`](../../.claude/skills/audit/SKILL.md)

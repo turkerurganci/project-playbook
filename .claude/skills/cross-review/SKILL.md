@@ -1,3 +1,9 @@
+---
+name: cross-review
+description: "Bir dokümanı bağımsız ikinci bir AI'ya okutup bulguları yansıtır; audit ve deep review'dan sonra çalışır. Kullan: 'cross-review', 'ikinci görüş', /cross-review Docs/XX_....md."
+user-invocable: true
+---
+
 # Cross Review — Bağımsız İkinci AI Review Döngüsü
 
 > **Ne zaman:** Bir dokümanın audit'i ve deep review'ı tamamlandıktan sonra.

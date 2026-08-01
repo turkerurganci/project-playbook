@@ -1,3 +1,9 @@
+---
+name: task
+description: "Implementation task'ının yapım chat'ini işletir — başlangıç kapıları, referans dokümanlar, kod, test, PR ve 8 maddelik bitiş kapısı. Kullan: 'TXX yap', 'task TXX', /task TXX. Doğrulama ve merge bu skill'in işi DEĞİLDİR."
+user-invocable: true
+---
+
 # Task — Implementation Yapım Chat'i
 
 > **Ne zaman:** Bir implementation task'ına başlanacağında.
@@ -126,7 +132,7 @@ gh run list --branch main --limit 3 --json databaseId,conclusion,status,displayT
 
 13. **Commit ve push** — commit subject'i `TXX: ...` ile başlar (commit-msg hook kontrol eder).
 
-14. **Rapor taslağı** — `Docs/TASK_REPORTS/TXX_REPORT.md`, şablon: [`_TEMPLATE.md`](../../Docs/TASK_REPORTS/_TEMPLATE.md).
+14. **Rapor taslağı** — `Docs/TASK_REPORTS/TXX_REPORT.md`, şablon: [`_TEMPLATE.md`](../../../Docs/TASK_REPORTS/_TEMPLATE.md).
     Startup check sonuçları, dış varsayım listesi ve working tree kararı "Notlar" bölümüne girer.
 
 15. **Status güncelle** — `Docs/IMPLEMENTATION_STATUS.md`'de task `⏳ Devam ediyor`.
@@ -175,6 +181,6 @@ Aşağıdaki **sekiz maddenin hepsi ✓** olmadan task "yapım bitti" sayılmaz 
 
 1. Çalışmayı durdur.
 2. Alt türü belirle: `SPEC_GAP` / `DEPENDENCY_MISMATCH` / `PLAN_CORRECTION_REQUIRED` / `EXTERNAL_BLOCKER`.
-3. `Docs/TASK_REPORTS/TXX_REPORT.md`'yi [`_TEMPLATE_BLOCKED.md`](../../Docs/TASK_REPORTS/_TEMPLATE_BLOCKED.md) şablonuyla oluştur.
+3. `Docs/TASK_REPORTS/TXX_REPORT.md`'yi [`_TEMPLATE_BLOCKED.md`](../../../Docs/TASK_REPORTS/_TEMPLATE_BLOCKED.md) şablonuyla oluştur.
 4. `Docs/IMPLEMENTATION_STATUS.md`'de durumu `⛔ BLOCKED` yap.
 5. Proje sahibine sun: neden, etki analizi, çözüm önerileri.

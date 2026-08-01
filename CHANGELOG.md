@@ -9,6 +9,21 @@ Bu template kendi sürümünü taşır. Yeni projelerdeki öğrenimler buraya ge
 
 ---
 
+## v1.1.0 — 2026-08-01
+
+**Skill'ler gerçekten çağrılabilir hâle geldi.** README ve `INSTRUCTIONS §10` `/task`, `/validate`, `/gate-check` gibi slash command'ler vaat ediyordu; oysa `.claude/skills/*.md` düz markdown dosyalarıydı — frontmatter yok, `<ad>/SKILL.md` yapısı yok, `.claude/commands/` yok. Ajan bunları yalnızca `CLAUDE.md`'yi okuyup dosyaya gittiği için işletiyordu: **konvansiyon olarak** çalışıyor, **mekanizma olarak** çalışmıyordu. Vaat edilen kapı, ajan `CLAUDE.md`'yi atladığı anda yok oluyordu.
+
+Sekiz skill `<ad>/SKILL.md` yapısına taşındı (`git mv` ile geçmiş korunarak) ve `name` / `description` / `user-invocable: true` frontmatter'ı eklendi. Açıklamalar çift tırnaklı — tırnaksız hâli de ayrıştırılıyor, ama bu ayrıştırıcı hoşgörüsüne bağımlılıktır ve açıklamalar `:` içeriyor.
+
+Minor sürüm: yeni kural veya skill eklenmedi, ama L4 katmanının çalışma mekanizması değişti.
+
+**Ayrıca:**
+- README ilk cümlesi "13 doküman aşaması" diyordu; `00 §C.1` tablosunda **10** aşama var, 13 ise *doküman* sayısı (00–12). Yeni gelenin okuduğu ilk esaslı cümleydi.
+- `SETUP §8`'in (kurulum sonrası doğrulama) ne zaman işletileceği hiç yazmıyordu. §4 Aşama 4'e ertelenebildiği için §8 de otomatik erteleniyordu, ama bu çıkarım okuyucuya bırakılmıştı — şablonun kendi kuralına göre (GUARDRAILS §5) her adım bir kapıya bağlı olmalı. Tetikleyici tanımlandı: `SETUP_COMPLETE=true` günü, ilk implementation task'ından önce.
+- Skill dosya yoluna verilen beş referans yeni yapıya güncellendi.
+
+---
+
 ## v1.0.3 — 2026-08-01
 
 **Bypass kaydı yanlış commit'i yazıyordu.** `pre-push` `log_bypass()` fonksiyonu `git rev-parse --short HEAD` kullanıyordu; oysa kaydedilmesi gereken **push edilen ref'in tepesi**. Üzerinde durmadığınız bir dalı push etmek olağandır — topic dalındayken `git push origin main`, ya da yeni bir remote'a bootstrap push'u. O durumda kayıt, kapıyı hiç atlamamış bir commit'i işaret ediyordu.

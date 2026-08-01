@@ -76,7 +76,7 @@ Task TXX: [Task adı]
 
 ### 6.1 Genel gate check (tüm fazlarda)
 
-> Detaylı prosedür: `.claude/skills/gate-check.md`. Burada faz-spesifik ek kontroller listelenir.
+> Detaylı prosedür: `.claude/skills/gate-check/SKILL.md`. Burada faz-spesifik ek kontroller listelenir.
 
 ### 6.2 Faz-spesifik kontroller
 

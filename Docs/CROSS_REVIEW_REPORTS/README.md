@@ -12,4 +12,4 @@ Her rapor şunları içerir:
 
 **Objektivite kuralı:** %100 KABUL de %100 RET de şüphelidir. RET gerekçesi somut referans olmalıdır ("ben böyle düşünüyorum" yetersiz).
 
-Prosedür: [`.claude/skills/cross-review.md`](../../.claude/skills/cross-review.md)
+Prosedür: [`.claude/skills/cross-review/SKILL.md`](../../.claude/skills/cross-review/SKILL.md)

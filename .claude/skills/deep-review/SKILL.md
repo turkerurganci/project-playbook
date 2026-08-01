@@ -1,3 +1,9 @@
+---
+name: deep-review
+description: "Bir dokümanın kalitesini ve tutarlılığını 8 katmanda analiz eder. Audit kapsama bakar, bu kaliteye bakar. Kullan: 'deep review yap', 'zayıf noktaları bul', /deep-review XX."
+user-invocable: true
+---
+
 # Deep Review — Doküman Kalite ve Tutarlılık Analizi
 
 > **Ne zaman:** Bir dokümanın içeriğinin yeterliliğini, tutarlılığını ve sağlamlığını doğrulamak için.

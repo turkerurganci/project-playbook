@@ -19,7 +19,7 @@ Her task için bir rapor: `TXX_REPORT.md` (borç paketleri için `WPn_REPORT.md`
 
 ## Sık yapılan hatalar
 
-- **PR alanını boş bırakmak** → otomatik BLOCKED tetikler (`task.md` bitiş kapısı).
+- **PR alanını boş bırakmak** → otomatik BLOCKED tetikler (`task` skill'i bitiş kapısı).
 - **"Dış varsayım" bölümünü boş bırakmak** → audit trail'in eksikliği, varsayımın yokluğu anlamına gelmez. "Yok" da yazılır.
 - **Follow-up'ı yalnız burada bırakmak** → ertelenen iş `DEFERRED_BACKLOG.md`'ye yazılmadıysa ertelenmiş sayılmaz.
 - **Post-merge run ID'lerini doğrudan ana dala push etmek** → ayrı `chore:` PR'ı veya sonraki task dalı kullanılır.
