@@ -1,6 +1,6 @@
 # SETUP — 0. Gün Kurulum Checklist'i
 
-**Playbook sürümü:** v1.0
+**Playbook sürümü:** v1.0.2
 
 > Bu template "Use this template" ile klonlandıktan sonra **bir kez** işletilir.
 > Doldurulan her parametre kalıcıdır; değiştirilmesi rejim değişikliğidir ve proje sahibi onayı gerektirir (GUARDRAILS §2).
@@ -128,11 +128,31 @@
 | 4 | Direct push bloklanıyor | `git push origin main` |
 | 5 | Guard job çalışıyor | Ana dala bir PR merge edip Actions'ta `0. Guard` sonucuna bak |
 | 6 | Sır guard'ı çalışıyor | Sahte bir `API_KEY=...` satırını stage'leyip commit dene → bloklanmalı |
-| 7 | **Yer tutucu kalmadı** | `grep -rn '\`<[^>]*>\`' Docs/ .claude/ SETUP.md` boş dönmeli — `<PROJE>`, `<SETUP'ta doldurulur>`, `<discipline-only / …>` dahil **her** yer tutucuyu kapsar |
+| 7 | **Kurulum yer tutucusu kalmadı** | Aşağıdaki komut boş dönmeli — muafiyet tablosu altta |
 | 8 | Tarih yer tutucusu kalmadı | `grep -rn 'YYYY-AA-GG' Docs/ .claude/` — yalnız **şablon** dosyalarında (`_TEMPLATE*.md`) kalmalı |
 | 9 | İkinci AI atandı | Aşağıdaki kayıt tablosunda satır dolu |
 
-> Kontrol 7'nin deseni bilinçli olarak **jeneriktir**: ileride eklenecek her yer tutucuyu otomatik kapsar. Belirli bir dizeyi (`<PROJE>`) aramak, o dizeyi bilmeyen yeni bir yer tutucuyu ağdan kaçırır — O-1 bulgusunun kaynağı buydu.
+**Kontrol 7 komutu:**
+
+```bash
+grep -rn '`<[^>]*>`' Docs/ .claude/ \
+  | grep -vE '_TEMPLATE|IMPLEMENTATION_STATUS|STATUS_CHANGELOG|DEBT_CLOSURE_PLAN|memory/MEMORY|/skills/'
+```
+
+> **Desen neden jenerik.** İleride eklenecek her yer tutucuyu otomatik kapsar. Belirli bir dizeyi (`<PROJE>`) aramak, o dizeyi bilmeyen yeni bir yer tutucuyu ağdan kaçırır — O-1 bulgusunun kaynağı buydu.
+>
+> **Muafiyet neden dosya bazlı.** Muaf dosyaların yer tutucuları kuruluma değil, aşağıdaki kapıya aittir — sahipsiz yer tutucu yasaktır (GUARDRAILS §5). Muafiyet **dosya** bazlıdır, dize bazlı değil: muaf olmayan bir dosyaya eklenen **yeni** bir yer tutucu ağa takılmaya devam eder.
+>
+> | Muaf | Yer tutucuyu dolduran kapı |
+> |---|---|
+> | `_TEMPLATE*.md` | Şablon — hiç doldurulmaz |
+> | `IMPLEMENTATION_STATUS.md` | İlk task doğrulaması |
+> | `STATUS_CHANGELOG.md` | İlk status taşıması (biçim örneği) |
+> | `DEBT_CLOSURE_PLAN.md` | Dönem 3 — borç kapatma (00 §I) |
+> | `.claude/memory/MEMORY.md` | Her task kapanışı. "Proje Özeti" bloğu bunun istisnası — onu §1'in checkbox'ı kurulumda kapatır |
+> | `.claude/skills/*.md` | Çıktı biçimi örnekleri — doldurulmaz |
+>
+> `SETUP.md` taramaya **dahil değildir**: §1 ve §8'deki `<PROJE>` geçişleri yer tutucu değil, yer tutucuyu *tarif eden* talimattır. Kurulumda temizlenmesi gereken asıl hedef `.claude/CONTEXT.md` §1/§3'tür.
 
 ---
 

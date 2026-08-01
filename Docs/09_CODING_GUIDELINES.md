@@ -10,7 +10,7 @@
 
 ## 1. Temel ilkeler
 
-- Somut örnekle tanımla. "Hata yönetimi yapılmalı" değil, "hata yönetimi şöyle yapılır: `<örnek>`".
+- Somut örnekle tanımla. "Hata yönetimi yapılmalı" değil, "hata yönetimi şöyle yapılır: (somut örnek)".
 - Tek kaynak, tek doğru. Bir kural iki yerde farklı anlatılmaz.
 
 ## 2. Source of truth hiyerarşisi
