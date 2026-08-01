@@ -1,3 +1,9 @@
+---
+name: handoff
+description: "Oturumu temiz kapatır ve sonraki chat'in sorunsuz başlamasını sağlar. Kullan: 'yeni chate geçiyorum', 'oturumu kapat', /handoff."
+user-invocable: true
+---
+
 # Handoff — Chat Geçişi
 
 > **Ne zaman:** Yeni bir chat'e geçilmeden önce; mevcut oturumun temiz kapanması ve sonrakinin sorunsuz başlaması için.

@@ -1,3 +1,9 @@
+---
+name: audit
+description: "Bir dokümanı envanter bazlı sistematik denetimden geçirir; önce kontrol edilecek her şeyi listeler, sonra tek tek denetler, atlama olmaz. Kullan: 'audit yap', 'sistematik kontrol', /audit XX."
+user-invocable: true
+---
+
 # Audit — Sistematik Doküman Denetimi
 
 > **Ne zaman:** Bir dokümanın eksik, tutarsız veya yetersiz noktalarını **eksiksiz** tespit etmek için.

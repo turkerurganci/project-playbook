@@ -2,13 +2,13 @@
 
 **Fikirden çalışan MVP'ye, bir AI ajanıyla.** Uygulama- ve teknoloji-bağımsız bir GitHub template.
 
-**Sürüm:** v1.0.3 · **Doküman dili:** Türkçe · **Kod dili:** İngilizce
+**Sürüm:** v1.1.0 · **Doküman dili:** Türkçe · **Kod dili:** İngilizce
 
 ---
 
 ## Bu nedir
 
-Bir yazılım projesini fikir aşamasından çalışan bir MVP'ye taşıyan **tam bir çalışma sistemi**: 13 doküman aşaması, faz bazlı implementasyon döngüsü, bağımsız doğrulama protokolü, MVP borç kapatma aşaması ve kapanış ritüeli — hepsi kapılarla, kayıtlarla ve `exit 1` veren mekanik katmanlarla birlikte.
+Bir yazılım projesini fikir aşamasından çalışan bir MVP'ye taşıyan **tam bir çalışma sistemi**: 10 doküman üretim aşaması (13 doküman), faz bazlı implementasyon döngüsü, bağımsız doğrulama protokolü, MVP borç kapatma aşaması ve kapanış ritüeli — hepsi kapılarla, kayıtlarla ve `exit 1` veren mekanik katmanlarla birlikte.
 
 Bu bir "best practices" listesi değildir. Gerçek bir projede fikirden MVP'ye kadar **fiilen uygulanmış** bir yöntemin son hâlidir; buradaki her savunma katmanı, o projede gerçekleşmiş somut bir başarısızlığın karşılığıdır.
 
@@ -61,8 +61,8 @@ Docs/
   INSTRUCTIONS.md            Oturum davranışı
   GUARDRAILS.md              Sınırlar ve yasaklar
   CONTEXT.md                 Klasör haritası (dosya listesi değil)
-  skills/                    task · validate · gate-check · audit · deep-review
-                             cross-review · checkpoint · handoff
+  skills/<ad>/SKILL.md       task · validate · gate-check · audit · deep-review
+                             cross-review · checkpoint · handoff  (slash command)
   checklists/                Doküman üretim aşaması işletim checklist'i
   memory/                    Proje hafızası + terfi kuralı
   settings.json              Paylaşılan ajan ayarları (izlenir)

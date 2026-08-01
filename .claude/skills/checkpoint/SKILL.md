@@ -1,3 +1,9 @@
+---
+name: checkpoint
+description: "Aşama içi veya aşamalar arası geçişte ilerlemeyi doğrular ve tutarsızlıkları tarar. Doküman aşamaları içindir; kod fazları için gate-check. Kullan: 'checkpoint yap', 'cross-check', /checkpoint."
+user-invocable: true
+---
+
 # Checkpoint — Aşama Doğrulama
 
 > **Ne zaman:** Bir aşama içinde veya aşamalar arası geçişte; ilerlemeyi doğrulamak ve eksikleri yakalamak için.

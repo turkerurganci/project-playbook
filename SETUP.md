@@ -1,11 +1,13 @@
 # SETUP — 0. Gün Kurulum Checklist'i
 
-**Playbook sürümü:** v1.0.3
+**Playbook sürümü:** v1.1.0
 
 > Bu template "Use this template" ile klonlandıktan sonra **bir kez** işletilir.
 > Doldurulan her parametre kalıcıdır; değiştirilmesi rejim değişikliğidir ve proje sahibi onayı gerektirir (GUARDRAILS §2).
 >
-> **Sıra önemlidir.** §1 → §7 sırayla gidilir; §7 tamamlanmadan ilk task başlatılmaz.
+> **Sıra önemlidir.** §1 → §7 sırayla gidilir; §7 tamamlanmadan ilk doküman aşaması başlatılmaz.
+>
+> **§8 ne zaman çalışır.** §4 (CI komutları) teknoloji yığınını gerektirir, yığın ise Aşama 4'te belirlenir — bu yüzden §4 ertelenebilir (bkz. §2 uyarısı). §8 doğrulaması §4'ün kapanmasına bağlıdır: **`SETUP_COMPLETE=true` yapıldığı gün** işletilir ve **ilk implementation task'ından (Dönem 2) önce** tamamlanmış olmalıdır. Kurulum, §8 geçmeden bitmiş sayılmaz.
 
 ---
 

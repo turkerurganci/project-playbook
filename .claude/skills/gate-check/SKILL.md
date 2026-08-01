@@ -1,3 +1,9 @@
+---
+name: gate-check
+description: "Bir fazın tüm task'ları bittikten sonra faz kapanışını doğrular — test, build, ortam, migration, öğrenim terfisi, backlog hijyeni. Kullan: 'FX gate check', 'faz kontrolü', /gate-check FX. Ayrı chat'te."
+user-invocable: true
+---
+
 # Gate Check — Faz Sonu Doğrulama
 
 > **Ne zaman:** Bir fazın tüm task'ları tamamlandıktan sonra, sonraki faza geçiş onayı için.

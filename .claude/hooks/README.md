@@ -34,7 +34,7 @@ Hook'lar `.claude/settings.json` içinde kaydedilir — **repo'da izlenen** dosy
 
 | Amaç | Nasıl |
 |---|---|
-| **Post-merge workflow hatırlatıcısı** | Merge komutu algılandığında, o commit için tetiklenen workflow ID'lerini bağlama enjekte et. `validate.md` Adım 18'in (post-merge CI watch) unutulmasına karşı yapısal destek. |
+| **Post-merge workflow hatırlatıcısı** | Merge komutu algılandığında, o commit için tetiklenen workflow ID'lerini bağlama enjekte et. `validate` skill'i Adım 18'in (post-merge CI watch) unutulmasına karşı yapısal destek. |
 | **Salt-okunur komut ön onayı** | Sık kullanılan zararsız komutları otomatik onayla; izin sorularını azalt. |
 | **Oturum başı durum enjeksiyonu** | Açık PR'lar veya son CI durumu gibi bağlamı oturum başında hazır et. |
 
