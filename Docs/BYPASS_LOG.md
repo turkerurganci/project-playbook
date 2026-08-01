@@ -30,3 +30,4 @@
 
 | Tarih | Kullanıcı | Dal | Commit | Sebep |
 |---|---|---|---|---|
+| 2026-08-01 20:03 UTC | Türker urgancı | main | `0c6213f` | **[direct-push]** ilk yayin — remote bootstrap; main'in uzakta karsiligi yok, PR akisi henuz mumkun degil  |
