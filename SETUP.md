@@ -1,6 +1,6 @@
 # SETUP — 0. Gün Kurulum Checklist'i
 
-**Playbook sürümü:** v1.0.2
+**Playbook sürümü:** v1.0.3
 
 > Bu template "Use this template" ile klonlandıktan sonra **bir kez** işletilir.
 > Doldurulan her parametre kalıcıdır; değiştirilmesi rejim değişikliğidir ve proje sahibi onayı gerektirir (GUARDRAILS §2).
