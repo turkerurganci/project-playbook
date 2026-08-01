@@ -1,6 +1,6 @@
 # Project Playbook — Metodoloji
 
-**Versiyon: v1.0** | **Bağımlılıklar:** Yok (kök doküman) | **Son güncelleme:** 2026-07-27
+**Versiyon: v1.0.1** | **Bağımlılıklar:** Yok (kök doküman) | **Son güncelleme:** 2026-07-30
 
 > Bu doküman bir yazılım projesini **fikirden çalışan MVP'ye** taşıyan yöntemin tamamıdır:
 > doküman üretimi, implementasyon, doğrulama, borç kapatma ve kapanış.
@@ -708,4 +708,4 @@ Prova sonucu `DEPLOY_RUNBOOK.md`'ye yazılır: ne çalıştı, ne kırıldı, ha
 
 ---
 
-*Project Playbook — Metodoloji v1.0*
+*Project Playbook — Metodoloji v1.0.1*

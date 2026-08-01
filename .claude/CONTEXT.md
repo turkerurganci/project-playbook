@@ -1,6 +1,6 @@
 # Proje Bağlamı ve Klasör Haritası
 
-**Katman:** L3 | **Son güncelleme:** 2026-07-27
+**Katman:** L3 | **Son güncelleme:** 2026-07-30
 
 ---
 

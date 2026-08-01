@@ -9,6 +9,22 @@ Bu template kendi sürümünü taşır. Yeni projelerdeki öğrenimler buraya ge
 
 ---
 
+## v1.0.2 — 2026-08-01
+
+Şablonun kendi üzerinde çalıştırılan doğrulama turu sonrası düzeltme.
+
+**Ulaşılamaz kapı kapatıldı:**
+- `SETUP §8` Kontrol 7'nin PASS koşulu (`grep` boş dönmeli) yapısal olarak sağlanamıyordu: taranan 36 satırın 27'si tasarım gereği kalıcıydı — desenin *kendisini tarif eden* SETUP satırları, Dönem 3'te dolan `DEBT_CLOSURE_PLAN`, her task'ta dolan `MEMORY.md`, biçim örnekleri. 0. günde boş dönemeyen bir kapı, esnetilmekten başka bir şey yapamaz (00 §A.2). Muafiyet **dosya bazlı** eklendi ve her muaf dosya bir kapıya bağlandı (GUARDRAILS §5); desen jenerik kaldı — muaf olmayan bir dosyaya eklenen yeni yer tutucu ağa takılmaya devam eder.
+- `09_CODING_GUIDELINES` §1'deki düz-yazı örneği yer tutucu biçimindeydi ve taramada yanlış pozitif üretiyordu; kaynağında düzeltildi — dosyayı muaf listesine almak, o dosyanın aşama 8'de dolan **gerçek** yer tutucularını da kör ederdi.
+
+**Damga sürüklenmesi:**
+- v1.0.1'de içeriği değişen üç dosyanın sürüm/tarih damgası hareket etmemişti: `00` (+51 satır, hâlâ `v1.0` / `2026-07-27`, footer dahil), `SETUP.md` (`v1.0`, README `v1.0.1` derken), `.claude/CONTEXT.md` (`2026-07-27`). Damganın yalan söylemesi INSTRUCTIONS §7'nin yasakladığı şeyin aynası ve 00 §K'nın öğrenim izini dayandırdığı veri.
+
+**Mekanik katman:**
+- `.gitattributes` "executable surface" bloğu `pre-commit`'i kapsamıyordu — hook v1.0.1'de eklendi, `.gitattributes` aynı commit'te düzenlendi ama yalnız bir yorum satırı değişti. `git check-attr` kanıtı: `text: auto` (diğer iki hook `text: set`). Pratik risk dardı (`* text=auto eol=lf` yine normalize eder), beyan edilen savunma üç hook'un birinde uygulanmıyordu.
+
+---
+
 ## v1.0.1 — 2026-07-30
 
 Bağımsız doğrulama + ikinci tur adversarial inceleme sonrası düzeltme turu.

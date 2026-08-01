@@ -2,7 +2,7 @@
 
 **Fikirden çalışan MVP'ye, bir AI ajanıyla.** Uygulama- ve teknoloji-bağımsız bir GitHub template.
 
-**Sürüm:** v1.0.1 · **Doküman dili:** Türkçe · **Kod dili:** İngilizce
+**Sürüm:** v1.0.2 · **Doküman dili:** Türkçe · **Kod dili:** İngilizce
 
 ---
 
