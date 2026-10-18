@@ -1,6 +1,6 @@
 # Doküman Üretim Aşaması — İşletim Checklist'i
 
-**Katman:** L4 (checklist) | **Son güncelleme:** 2026-07-27
+**Katman:** L4 (checklist) | **Son güncelleme:** 2026-10-18
 
 > **Bu neden skill değil?**
 > Doküman üretimi projeden projeye en çok değişen dönemdir ve bu adımlar bir referans projede
@@ -60,11 +60,13 @@
 
 ### 6. Kalite döngüsü (00 §C.5)
 
-- [ ] `/audit XX` — envanter bazlı sistematik denetim; sayılar tutuyor mu?
-- [ ] Audit bulgularını uygula
-- [ ] `/deep-review XX` — 8 katman
-- [ ] Deep review bulgularını uygula
-- [ ] `/cross-review Docs/XX_....md` — TEMİZ olana kadar tur tekrarla
+Aşağıdaki her madde **taze bir oturumda** (ya da taze bağlamlı bir alt ajanda) yürür; girdi ve çıktı dosyadır. Kararlar verildiği anda rapora işlenir.
+
+- [ ] `/audit XX` — envanter bazlı sistematik denetim; sayılar tutuyor mu? → `Docs/AUDIT_REPORTS/XX_AUDIT.md`
+- [ ] Audit bulgularını uygula — girdi: audit raporu
+- [ ] `/deep-review XX` — 8 katman → `Docs/AUDIT_REPORTS/XX_DEEP_REVIEW.md`
+- [ ] Deep review bulgularını uygula — girdi: deep-review raporu
+- [ ] `/cross-review Docs/XX_....md` — TEMİZ olana kadar tur tekrarla; her tur ve her düzeltme uygulaması (Faz 4.1) ayrı oturum
 - [ ] **Etki yansıtma** (cross-review Faz 5) — downstream + upstream + yeni alan taraması
 - [ ] `/checkpoint` — aşama geçiş taraması
 

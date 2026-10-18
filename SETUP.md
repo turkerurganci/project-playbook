@@ -1,6 +1,6 @@
 # SETUP — 0. Gün Kurulum Checklist'i
 
-**Playbook sürümü:** v1.1.0
+**Playbook sürümü:** v1.2.0
 
 > Bu template "Use this template" ile klonlandıktan sonra **bir kez** işletilir.
 > Doldurulan her parametre kalıcıdır; değiştirilmesi rejim değişikliğidir ve proje sahibi onayı gerektirir (GUARDRAILS §2).
@@ -114,9 +114,18 @@
 - [ ] `Docs/00_PROJECT_METHODOLOGY.md` proje sahibiyle birlikte gözden geçirildi
 - [ ] **İkinci AI erişim yöntemi belirlendi** ve aşağıdaki kayıt tablosuna yazıldı — script / web arayüzü / API. Kalite döngüsünün üç ayağından biri cross-review'dur (`00 §C.5`, *"üçü birbirinin yerine geçmez"*); yöntem atanmazsa ilk dokümanın kalite döngüsü **yarım** kalır.
 - [ ] Paylaşılan ajan ayarları gözden geçirildi (`.claude/settings.json` izlenir; `settings.local.json` kişiseldir)
+- [ ] Faturalama türü belirlendi ve önbellek süresi buna göre ayarlandı (aşağıdaki not)
 - [ ] `Docs/PRODUCT_DISCOVERY_STATUS.md` açıldı, doküman durumu tablosu hazır
 - [ ] İlk oturum `.claude/checklists/document-stage.md` ile başlatıldı (Aşama 1 — Product Discovery)
 - [ ] Bu dosyadaki tamamlanan maddeler commit'lendi (`chore: setup`)
+
+> **Oturum ve önbellek.** İçerik değişmez, yalnız faturalama değişir.
+>
+> - **Uzun aradan sonra `--resume` değil, taze oturum.** Önbellek süresi dolmuş bir oturumu sürdürmek, bütün bağlamı önbelleğe yeniden yazdırır. Bunun yerine yeni oturum açılır ve iş devir dosyasından sürdürülür: rapor, karar tablosu, durum dosyası (00 §C.5).
+> - **API anahtarı / kredi ile çalışılıyorsa:** ana konuşmanın önbellek süresi 5 dk'dır. İnsan beklemesi olan etkileşimli oturumlarda (workshop, cross-review'da kullanıcı kararı) `promptCacheTtl: "1h"` ayarlanır. Ayar faturalama türüne bağlı olduğu için **kişisel** ayara (`.claude/settings.local.json` ya da kullanıcı ayarı) yazılır, paylaşılan `settings.json`'a değil.
+> - **Abonelikte** ana konuşma zaten 1 sa alır; ayar gerekmez. Alt ajanlar her iki durumda 5 dk alır.
+>
+> Kaynak: https://code.claude.com/docs/en/prompt-caching
 
 ---
 

@@ -1,6 +1,6 @@
 # Proje Bağlamı ve Klasör Haritası
 
-**Katman:** L3 | **Son güncelleme:** 2026-08-01
+**Katman:** L3 | **Son güncelleme:** 2026-10-18
 
 ---
 
@@ -70,6 +70,7 @@ Bir dosyanın nerede olduğunu öğrenmek için dosya sistemine bak. Bir klasör
 | `.claude/GUARDRAILS.md` | Sınırlar ve yasaklar | Öğrenim terfilerinde |
 | `.claude/CONTEXT.md` | Bu dosya — klasör haritası | Yeni **klasör** açıldığında |
 | `.claude/skills/` | İş akışı skill'leri — her skill kendi klasöründe `<ad>/SKILL.md` (frontmatter'sız düz `.md` kayıt olmaz) | Öğrenim terfilerinde |
+| `.claude/agents/` | Alt ajan rol tanımları (mercek · şüpheci · mekanik) — rol başına bir `.md`, frontmatter'da model/effort/araçlar; hangi iş hangi role: `.claude/AGENT_ROLES.md` | Öğrenim terfilerinde; model değişikliği yalnız ölçülü A/B testiyle (00 §A.7) |
 | `.claude/checklists/` | Skill'e dönüşmemiş işletim checklist'leri | Aynı |
 | `.claude/memory/` | Proje hafızası + kişisel çalışma tercihleri | Her task/faz kapanışında |
 | `.claude/hooks/` | **Opsiyonel** oturum hook'ları (hatırlatıcı, bloklamaz — L5 değil) | Nadiren |

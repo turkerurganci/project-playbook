@@ -1,6 +1,6 @@
 # Project Playbook — Metodoloji
 
-**Versiyon: v1.0.1** | **Bağımlılıklar:** Yok (kök doküman) | **Son güncelleme:** 2026-07-30
+**Versiyon: v1.2.0** | **Bağımlılıklar:** Yok (kök doküman) | **Son güncelleme:** 2026-10-18
 
 > Bu doküman bir yazılım projesini **fikirden çalışan MVP'ye** taşıyan yöntemin tamamıdır:
 > doküman üretimi, implementasyon, doğrulama, borç kapatma ve kapanış.
@@ -40,8 +40,8 @@ Kurallar beş yere dağılmaz. Her kuralın **tek bir evi** vardır:
 |---|---|---|
 | **L1 — Metodoloji** | `Docs/00_PROJECT_METHODOLOGY.md` (bu dosya) | Sürecin kendisi: aşamalar, kapılar, konvansiyonlar. **Neden** burada. |
 | **L2 — Ürün dokümanları** | `Docs/01`–`Docs/12` | Ne inşa edilecek. Source of truth. |
-| **L3 — Çalışma talimatları** | `.claude/INSTRUCTIONS.md`, `.claude/GUARDRAILS.md`, `.claude/CONTEXT.md` | Ajanın oturum davranışı ve sınırları. |
-| **L4 — Skill'ler** | `.claude/skills/*.md` | Tekrarlanan iş akışlarının adım adım tarifi. |
+| **L3 — Çalışma talimatları** | `.claude/INSTRUCTIONS.md`, `.claude/GUARDRAILS.md`, `.claude/CONTEXT.md`, `.claude/AGENT_ROLES.md` | Ajanın oturum davranışı ve sınırları. |
+| **L4 — Skill'ler** | `.claude/skills/<ad>/SKILL.md`, `.claude/agents/*.md` | Tekrarlanan iş akışlarının adım adım tarifi; alt ajan rol tanımları. |
 | **L5 — Mekanik zorlama** | `scripts/git-hooks/`, `.github/workflows/` | İyi niyete bağlı olmayan, `exit 1` veren katman. |
 
 **Kural:** Bir süreç kuralı yalnızca hafızada (memory) yaşıyorsa **kırılgandır**. Evrensel kurallar L1–L5'e terfi eder; hafızada yalnızca **kişisel çalışma tercihleri** kalır (bkz. §G.3).
@@ -197,6 +197,12 @@ yazım → /audit (envanter bazlı sistematik denetim)
 - **Audit** ve **deep-review** aynı ajanın iç denetimidir; **cross-review** farklı bir modele okutmaktır. Üçü birbirinin yerine geçmez.
 - Cross-review'da **rubber stamp yasaktır**: %100 kabul şüphelidir. Her bulgu için KABUL / RET / KISMİ kararı ve RET için somut gerekçe zorunludur.
 - **Etki yansıtma atlanamaz:** İkinci AI her dokümanı izole okur, cross-document uyumsuzlukları yakalamaz. TEMİZ sonrası downstream/upstream tarama yapılır.
+
+**Oturum ekonomisi.** Döngünün her adımı — audit, deep-review, her cross-review turu, düzeltme uygulama, etki yansıtma, checkpoint — **taze bir oturumda** (ya da taze bağlamlı bir alt ajanda) yürür; adımlar arasındaki tek devir **dosyadır**: hedef doküman, önceki adımın raporu, karar tablosu. Kararlar ve kullanıcı onayları verildiği anda rapora işlenir; onaylanan düzeltmeler karar tablosundan, ayrı oturumda, bölüm bölüm toplu uygulanır ve ardından §C.4 koşulur.
+
+- **Neden:** Tek oturumda dönen döngüde bağlam büyür ve her tur bütün bağlamı yeniden okur — maliyet tur sayısıyla karesel artar. Yalnız bağlamda duran bir karar ise sıkıştırmada kaybolabilir; dosyadaki karar kaybolmaz.
+- **Değişmeyen:** Kontrollerin hiçbiri. Tam okuma kuralları, cross-review çıkış koşulu (`TEMİZ`) ve adımların sırası aynen kalır; değişen yalnız adımın hangi bağlamda yürüdüğüdür. Desen yeni değil — task/validate ayrımı da devri rapor dosyasıyla yapar (§D.2).
+- **Ayrıntı:** tur girdisi, karar satırının yapısı ve düzeltme uygulama yöntemi [`cross-review`](../.claude/skills/cross-review/SKILL.md) skill'inde (Oturum düzeni, Faz 2–4); alt ajan rolleri [`.claude/AGENT_ROLES.md`](../.claude/AGENT_ROLES.md)'de.
 
 > **Vaka:** Bir kodlama kılavuzu 7 tur cross-review sonunda 21 düzeltme aldı (3 kritik). Aynı süreçte eklenen 3 yeni alan, veri modeli dokümanında tanımlı değildi — bunu ne audit ne cross-review, **checkpoint** yakaladı. Kalite döngüsünün tamamı gerekli.
 
@@ -708,4 +714,4 @@ Prova sonucu `DEPLOY_RUNBOOK.md`'ye yazılır: ne çalıştı, ne kırıldı, ha
 
 ---
 
-*Project Playbook — Metodoloji v1.0.1*
+*Project Playbook — Metodoloji v1.2.0*

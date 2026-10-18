@@ -2,7 +2,7 @@
 
 **Fikirden çalışan MVP'ye, bir AI ajanıyla.** Uygulama- ve teknoloji-bağımsız bir GitHub template.
 
-**Sürüm:** v1.1.0 · **Doküman dili:** Türkçe · **Kod dili:** İngilizce
+**Sürüm:** v1.2.0 · **Doküman dili:** Türkçe · **Kod dili:** İngilizce
 
 ---
 
@@ -63,6 +63,7 @@ Docs/
   CONTEXT.md                 Klasör haritası (dosya listesi değil)
   skills/<ad>/SKILL.md       task · validate · gate-check · audit · deep-review
                              cross-review · checkpoint · handoff  (slash command)
+  agents/                    Alt ajan rolleri: mercek · şüpheci · mekanik
   checklists/                Doküman üretim aşaması işletim checklist'i
   memory/                    Proje hafızası + terfi kuralı
   settings.json              Paylaşılan ajan ayarları (izlenir)

@@ -1,6 +1,6 @@
 # AI Çalışma Talimatları
 
-**Katman:** L3 | **Son güncelleme:** 2026-07-27
+**Katman:** L3 | **Son güncelleme:** 2026-10-18
 
 > Bu dosya ajanın **oturum davranışını** tanımlar. Sürecin *neden*i [`Docs/00_PROJECT_METHODOLOGY.md`](../Docs/00_PROJECT_METHODOLOGY.md)'de, *sınırlar* [`GUARDRAILS.md`](GUARDRAILS.md)'de, *adım adım iş akışları* [`skills/`](skills/)'dedir.
 
@@ -224,6 +224,8 @@ Hâlâ onay gereken yerler:
 - `/handoff` — chat geçişi
 
 **Doküman üretim aşamaları:** skill değil, checklist — [`checklists/document-stage.md`](checklists/document-stage.md).
+
+**Alt ajan rolleri:** `mercek` · `supheci` · `mekanik` — hangi iş hangi role, neden: [`AGENT_ROLES.md`](AGENT_ROLES.md).
 
 ---
 

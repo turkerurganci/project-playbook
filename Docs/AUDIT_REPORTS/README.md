@@ -1,6 +1,6 @@
 # Audit Raporları
 
-`/audit XX` çıktıları: `XX_AUDIT.md` (tekrar turları `XX_AUDIT_R2.md`).
+`/audit XX` çıktıları: `XX_AUDIT.md` (tekrar turları `XX_AUDIT_R2.md`). `/deep-review XX` çıktıları: `XX_DEEP_REVIEW.md`.
 
 **Denetlenebilirlik kuralı:** Bir audit raporu, envanter toplamı ile eşleştirme sayısı **eşleşmiyorsa** geçersizdir — öğe atlanmış demektir. Rapor bu iki sayıyı açıkça gösterir.
 

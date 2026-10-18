@@ -19,6 +19,8 @@ user-invocable: true
 | `bağlam` | Hayır | Karşılaştırılacak dokümanlar; verilmezse header'daki bağımlılıklar + MVP kapsamı |
 | `odak` | Hayır | Belirli konu; verilirse **tüm katmanlar** yalnız o konuya odaklanır |
 
+**Oturum:** Deep review **taze bir oturumda** (ya da taze bağlamlı bir alt ajanda) yürür (00 §C.5). Girdi dosyalardır — hedef ve bağlam dokümanları; çıktı `Docs/AUDIT_REPORTS/XX_DEEP_REVIEW.md`. Bulguların uygulanması ayrı bir oturumda, bu rapordan, [`cross-review`](../cross-review/SKILL.md) Faz 4.1 yöntemiyle yapılır (satır yeterliliği, bölüm sırası, ardından `00 §C.4`); bu yüzden her bulgu satırı o yöntemin istediği metni tam taşır. Katmanlar alt ajanlara dağıtılırsa hangi işin hangi role verileceği [`.claude/AGENT_ROLES.md`](../../AGENT_ROLES.md)'dedir.
+
 ## Ön hazırlık
 
 1. Hedef dokümanı **baştan sona** oku.

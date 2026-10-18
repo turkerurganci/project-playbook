@@ -9,6 +9,29 @@ Bu template kendi sürümünü taşır. Yeni projelerdeki öğrenimler buraya ge
 
 ---
 
+## v1.2.0 — 2026-10-18
+
+**Kalite döngüsü tek oturumda dönüyordu.** Şablon model, effort, alt ajan ve oturum bölme hakkında hiçbir şey söylemiyordu; audit → deep-review → cross-review turları → etki yansıtma → checkpoint aynı oturumda yürüyebiliyordu. Bağlam büyüdükçe her tur bütün bağlamı yeniden okur — maliyet tur sayısıyla karesel artar. Gözlenen bir kalite döngüsü adımında bağlam 26k'dan 738k'ya büyüdü ve maliyetin büyük kısmı 400k'nın üstünde harcandı; 218 küçük düzenleme 73 tura yayıldı; kabul edilen bulgular yalnız bağlamda durduğu için otomatik sıkıştırma bir kalite riski oldu. Implementasyonda bu desen zaten yoktu — task ve validate ayrı chat, devir rapor dosyası (`00 §D.2`) — ama doküman dönemine taşınmamıştı.
+
+Bu sürüm **hiçbir kontrolü değiştirmez**: tam okuma kuralları, cross-review çıkış koşulu (`TEMİZ`), adımların sırası ve sayısı aynen kalır. Değişen, adımların hangi bağlamda yürüdüğü ve kararların ne zaman diske indiği.
+
+- **Adım başına taze oturum, devir dosyayla** (`00 §C.5` "Oturum ekonomisi"; ayrıntı skill'lerde) — audit, deep-review, her cross-review turu, düzeltme uygulama, etki yansıtma ve checkpoint ayrı oturumda (ya da taze bağlamlı alt ajanda) yürür. Cross-review tur değerlendiricisine o dokümanın önceki bütün tur raporları girdi olarak verilir; turlar arası RET gerekçeleri tutarlı kalır.
+- **"Kararları anında kayıt altına al" kalite döngüsünde adım oldu.** Kural vardı (`INSTRUCTIONS §2`), ama cross-review'da kullanıcı onayının ve düzeltmeye dönüşen kararın rapora ne zaman işleneceği yazılı değildi. Artık her KABUL / RET / KISMİ ve her kullanıcı onayı verildiği anda rapora işlenir.
+- **Düzeltme uygulama yöntemi** (cross-review Faz 4.1) — karar satırı hedef bölüm + istenen değişiklik + gerekçeyi tam metin taşır, KISMİ'de alternatifin kendisini; düzeltmeler ayrı oturumda, bölüm sırasıyla, bölüm başına toplu uygulanır ve ardından `00 §C.4`'ün üç kontrolü koşulur. Eksik satır tahminle uygulanmaz.
+- **Deep-review çıktısının evi** — `Docs/AUDIT_REPORTS/XX_DEEP_REVIEW.md`. Önceden tanımlı değildi; devir dosyası olmadan adım ayrı oturuma bölünemez.
+- **`.claude/agents/`** — üç alt ajan rolü: `mercek` ve `supheci` (opus · high, salt-okur), `mekanik` (haiku · low; yalnız sayma, listeleme, var/yok). Üçü de `omitClaudeMd: true`: oturum başındaki beş dosyalık okuma her alt ajana binmez; bunun yerine rolün uyması gereken kurallar tanımın gövdesinde, kural evine işaretle aktarıldı. `maxTurns` bilinçli olarak yok — sınıra gelen alt ajan yarım sonuç döndürür. Bulgu bulan ve karar veren iş Opus high'da kalır; model değişikliği yalnız ölçülü A/B testiyle, `00 §A.7` yolundan.
+- **`CLAUDE.md` "Compact instructions"** — sıkıştırmada açık kararlar, rapor ve karar tablosu yolları ve yürüyen adımın fazı korunur; rapora yazılmamış karar önce yazılır. Tasarruf değil, sigorta.
+- **`SETUP §7` oturum ve önbellek notu** — uzun aradan sonra `--resume` yerine taze oturum + devir dosyası; API anahtarıyla insan beklemeli etkileşimli oturumlarda `promptCacheTtl: "1h"` (kişisel ayarda — faturalama türüne bağlı).
+
+Minor sürüm: yeni kural ve yeni L4 bileşeni (`.claude/agents/`) eklendi; süreç şekli değişmedi.
+
+**Ayrıca:**
+- `00 §A.4` L4 satırı v1.1.0'dan beri eski yapıyı gösteriyordu (`.claude/skills/*.md`); `<ad>/SKILL.md` ve `.claude/agents/` ile güncellendi. `CLAUDE.md` katman satırı da aynı.
+- `.claude/AGENT_ROLES.md` `.claude/` kökünde durduğu için L3'tür (L4 değil); `00 §A.4` L3 satırına eklendi. `CLAUDE.md`'nin L3 tanımı (`.claude/*.md`) onu zaten kapsıyor.
+- Damgalar: `00` (v1.0.1 → v1.2.0, header ve footer), `SETUP.md`, `README.md`, `INSTRUCTIONS.md`, `CONTEXT.md`, `checklists/document-stage.md`.
+
+---
+
 ## v1.1.0 — 2026-08-01
 
 **Skill'ler gerçekten çağrılabilir hâle geldi.** README ve `INSTRUCTIONS §10` `/task`, `/validate`, `/gate-check` gibi slash command'ler vaat ediyordu; oysa `.claude/skills/*.md` düz markdown dosyalarıydı — frontmatter yok, `<ad>/SKILL.md` yapısı yok, `.claude/commands/` yok. Ajan bunları yalnızca `CLAUDE.md`'yi okuyup dosyaya gittiği için işletiyordu: **konvansiyon olarak** çalışıyor, **mekanizma olarak** çalışmıyordu. Vaat edilen kapı, ajan `CLAUDE.md`'yi atladığı anda yok oluyordu.

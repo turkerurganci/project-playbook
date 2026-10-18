@@ -10,6 +10,8 @@ user-invocable: true
 > **Tetikleme:** "checkpoint yap", "cross-check" veya `/checkpoint`.
 >
 > **Gate check'ten farkı:** Gate check **kod fazlarını** kapatır (test, build, ortam, migration). Checkpoint **doküman aşamalarını** ve genel tutarlılığı tarar.
+>
+> **Oturum:** Checkpoint **taze bir oturumda** (ya da taze bağlamlı bir alt ajanda) yürür (00 §C.5). Girdi dosyalardır — aşağıdaki adımların okuduğu dokümanlar ve bu aşamanın kalite döngüsü raporları; çıktı `Docs/CHECKPOINT_REPORTS/` altındaki rapordur.
 
 ---
 

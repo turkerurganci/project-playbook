@@ -5,7 +5,7 @@ Bağımsız ikinci AI review turlarının çıktıları: `XX_CROSS_REVIEW.md`, `
 Her rapor şunları içerir:
 
 1. **Ham bulgular** — ikinci modelin çıktısı, düzenlenmeden
-2. **Bağımsız değerlendirme tablosu** — her bulgu için ✅ KABUL / ❌ RET / ⚠️ KISMİ + **gerekçe**
+2. **Bağımsız değerlendirme tablosu** — her bulgu için ✅ KABUL / ❌ RET / ⚠️ KISMİ + **gerekçe**; KABUL ve KISMİ satırında hedef bölüm + istenen değişikliğin tam metni (düzeltme bu satırdan, ayrı oturumda uygulanır)
 3. **Ek bulgular** — ikinci modelin kaçırdığı, okurken fark edilenler
 4. **Kullanıcı onay checklist'i** — hangi düzeltmeler uygulanacak
 5. **Etki yansıtma sonucu** (son turda) — downstream + upstream + yeni alan taraması

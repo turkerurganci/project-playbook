@@ -19,6 +19,8 @@ user-invocable: true
 | `bağlam` | Hayır | Kaynak dokümanlar. Verilmezse hedefin `Bağımlılıklar` header alanı + `10_MVP_SCOPE.md` |
 | `odak` | Hayır | Belirli bir konuya odaklanma; verilirse envantere yalnız o konuyla ilgili öğeler girer |
 
+**Oturum:** Audit **taze bir oturumda** (ya da taze bağlamlı bir alt ajanda) yürür (00 §C.5). Girdi dosyalardır — hedef ve bağlam dokümanları; çıktı `Docs/AUDIT_REPORTS/XX_AUDIT.md` (tekrar turunda `XX_AUDIT_R2.md`). Bulguların uygulanması ayrı bir oturumda, bu rapordan, [`cross-review`](../cross-review/SKILL.md) Faz 4.1 yöntemiyle yapılır (satır yeterliliği, bölüm sırası, ardından `00 §C.4`); bu yüzden her bulgu satırı o yöntemin istediği metni tam taşır.
+
 ---
 
 ## Faz 0 — Ön hazırlık
